@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlyQRCode — 自訂樣式、即時預覽、PNG/SVG 下載，資料在瀏覽器本地處理。">
+    <meta name="keywords" content="QR Code,二維碼,免費,線上,產生器">
+    <meta name="robots" content="index, follow">
+    <title>FlyQRCode - 免費線上 QR Code 產生器</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/">
+    <link rel="stylesheet" href="../css/main.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6654903504279698"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>QR Code 產生</h1>
+            <p>自訂樣式、即時預覽、歷史記錄與一鍵下載 PNG / SVG</p>
+            <nav class="site-nav" aria-label="Navigation">
+    <a href="./index.html">首頁</a>
+    <a href="./about.html">關於我們</a>
+    <a href="./contact.html">聯絡我們</a>
+    <a href="./privacy.html">隱私權政策</a>
+    <a href="./terms.html">使用條款</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <div class="workspace">
+            <main class="main-column">
+                <section class="panel">
+                    <div class="panel-head"><h2>內容與樣式</h2></div>
+                    <div class="panel-body">
+                        <form id="qr-form" autocomplete="off">
+                            <div class="form-grid">
+                                <div class="field span-2">
+                                    <label for="field-text">QR Code 內容 *</label>
+                                    <textarea id="field-text" placeholder="連結、文字、WiFi 設定等" required></textarea>
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-label">備註名稱（選填，用於下載檔名與歷史）</label>
+                                    <input type="text" id="field-label" placeholder="用於下載檔名，可留空">
+                                </div>
+                                <div class="field span-2">
+                                    <label>風格預設</label>
+                                    <div id="preset-grid" class="preset-grid"></div>
+                                    <select id="field-preset" hidden aria-hidden="true"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-size">尺寸 <span id="field-size-val">320px</span></label>
+                                    <input type="range" id="field-size" min="200" max="800" step="10" value="320">
+                                </div>
+                                <div class="field">
+                                    <label for="field-margin">邊距</label>
+                                    <input type="number" id="field-margin" min="0" max="80" value="12">
+                                </div>
+                                <div class="field">
+                                    <label for="field-dot-type">碼點形狀</label>
+                                    <select id="field-dot-type"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-fg-color">前景色</label>
+                                    <input type="color" id="field-fg-color" value="#111111">
+                                    <div class="field-inline" style="margin-top:8px">
+                                        <input type="checkbox" id="field-use-gradient">
+                                        <label for="field-use-gradient" style="margin:0;font-weight:400">使用預設漸層</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="field-bg-color">背景色</label>
+                                    <input type="color" id="field-bg-color" value="#ffffff">
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-logo">中央 Logo（選填）</label>
+                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <p class="field-hint">建議正方形透明 PNG，體積 &lt; 512KB</p>
+                                    <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>移除 Logo</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <section class="panel content-section">
+                    <div class="panel-head"><h2>使用指南</h2></div>
+                    <div class="panel-body prose">
+                        <p>FlyQRCode 讓您在幾秒內製作可掃描的 QR Code，無需安裝或註冊。</p>
+                        <h3>快速上手</h3>
+                        <ol>
+                            <li>在「QR Code 內容」貼上網址、純文字或 WiFi 字串；</li><li>選擇風格預設，或自訂顏色、碼點形狀與尺寸；</li><li>可選上傳中央 Logo；</li><li>點擊「下載 PNG」或「下載 SVG」。</li>
+                        </ol>
+                        <h3>常見用途</h3>
+                        <ul><li>網站推廣 — 海報與傳單連結；</li><li>線下活動 — 簽到、抽獎；</li><li>門市 WiFi — 顧客掃碼連線；</li><li>電子名片 — 聯絡方式或社群。</li></ul>
+                        <h3>設計建議</h3><p>印刷建議使用「極簡黑白」並保留足夠靜區。正式使用前請用手機實測。</p>
+                        <h3>隱私說明</h3>
+                        <p>輸入內容在瀏覽器本地產生，不會上傳至伺服器。 <a href="./privacy.html">隱私權政策</a> · <a href="./about.html">關於我們</a></p>
+                    </div>
+                </section>
+            </main>
+            <aside class="side-column">
+                <section class="panel preview-panel">
+                    <div class="panel-head"><h2>預覽</h2></div>
+                    <div class="panel-body">
+                        <div class="preview-stage"><div id="qr-preview"></div></div>
+                        <div class="preview-actions">
+                            <button type="button" class="btn btn-primary" id="btn-generate">產生並儲存歷史</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-png">下載 PNG</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-svg">下載 SVG</button>
+                            <button type="button" class="btn btn-ghost" id="btn-copy">複製圖片</button>
+                        </div>
+                    </div>
+                </section>
+                <section class="panel history-panel">
+                    <div class="panel-head">
+                        <h2>產生歷史</h2>
+                        <span class="badge"><span id="history-count">0</span> <span id="history-count-suffix">則</span></span>
+                    </div>
+                    <div class="panel-body">
+                        <p id="history-empty" class="history-empty">尚無記錄，點擊「產生並儲存歷史」後會顯示在這裡</p>
+                        <div id="history-list" class="history-list"></div>
+                        <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-history" style="margin-top:12px;width:100%">清空歷史</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer">
+        <a href="./index.html">首頁</a>
+        <a href="./about.html">關於我們</a>
+        <a href="./contact.html">聯絡我們</a>
+        <a href="./privacy.html">隱私權政策</a>
+        <a href="./terms.html">使用條款</a>
+    </nav>
+    <p class="footer-note">QR Code 內容僅在您的瀏覽器本地處理；歷史記錄保存在本機，不會上傳。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> © FlyQRCode. 保留所有權利。</p>
+</footer>
+<script>(function(){var y=document.getElementById("footer-year");if(y)y.textContent=String(new Date().getFullYear());})();</script>
+
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookie 與廣告說明</p>
+        <p class="cookie-text">我們使用 Cookie 以保障網站基本功能，並在您同意後展示 Google 等第三方個人化廣告。 <a href="./privacy.html">隱私權政策</a>. <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google</a></p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">接受</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">僅必要 Cookie</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

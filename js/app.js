@@ -1356,6 +1356,259 @@ function applyPresetToForm(form, presetId) {
   };
 }
 
+// src/i18n.ts
+var STORAGE_KEY2 = "flyqrcode_locale";
+var PATH_LOCALES = [
+  { pattern: /\/en(?:\/|$)/, locale: "en" },
+  { pattern: /\/ja(?:\/|$)/, locale: "ja" },
+  { pattern: /\/ko(?:\/|$)/, locale: "ko" },
+  { pattern: /\/zh-tw(?:\/|$)/i, locale: "zhTW" }
+];
+var messages = {
+  zh: {
+    presets: {
+      mi: { name: "\u6696\u8272\u6A59", desc: "\u6A59\u8272\u6E10\u53D8\uFF0C\u9002\u5408\u5BA3\u4F20\u4E0E\u6D3B\u52A8\u9875" },
+      ocean: { name: "\u6D77\u6D0B\u84DD", desc: "\u6E05\u723D\u6E10\u53D8\uFF0C\u9002\u5408\u94FE\u63A5\u4E0E\u6587\u6863" },
+      forest: { name: "\u68EE\u6797\u7EFF", desc: "\u6C89\u7A33\u914D\u8272\uFF0C\u9002\u5408\u5185\u90E8\u5DE5\u5177" },
+      mono: { name: "\u6781\u7B80\u9ED1\u767D", desc: "\u9AD8\u5BF9\u6BD4\u6253\u5370\u53CB\u597D" },
+      night: { name: "\u6697\u591C\u7D2B", desc: "\u6DF1\u8272\u80CC\u666F\u5C55\u793A\u9875" }
+    },
+    dotTypes: {
+      rounded: "\u5706\u89D2\u5757",
+      dots: "\u5706\u70B9",
+      "classy-rounded": "\u7ECF\u5178\u5706\u89D2",
+      square: "\u65B9\u5757",
+      "extra-rounded": "\u8D85\u5706\u89D2"
+    },
+    toast: {
+      restored: "\u5DF2\u8F7D\u5165\u5386\u53F2\u8BB0\u5F55\uFF0C\u53EF\u7EE7\u7EED\u7F16\u8F91",
+      generateFailed: "\u751F\u6210\u5931\u8D25",
+      enterContent: "\u8BF7\u5148\u8F93\u5165\u4E8C\u7EF4\u7801\u5185\u5BB9",
+      saved: "\u5DF2\u4FDD\u5B58\u5230\u5386\u53F2\u8BB0\u5F55",
+      pickImage: "\u8BF7\u9009\u62E9\u56FE\u7247\u6587\u4EF6",
+      logoSize: "Logo \u5EFA\u8BAE\u5C0F\u4E8E 512KB",
+      generateFirst: "\u8BF7\u5148\u751F\u6210\u4E8C\u7EF4\u7801",
+      pngDownloaded: "PNG \u5DF2\u5F00\u59CB\u4E0B\u8F7D",
+      svgDownloaded: "SVG \u5DF2\u5F00\u59CB\u4E0B\u8F7D",
+      copied: "\u5DF2\u590D\u5236 PNG \u5230\u526A\u8D34\u677F",
+      copyFailed: "\u590D\u5236\u5931\u8D25",
+      cleared: "\u5386\u53F2\u5DF2\u6E05\u7A7A"
+    },
+    history: {
+      custom: "\u81EA\u5B9A\u4E49",
+      untitled: "\u672A\u547D\u540D",
+      edit: "\u7F16\u8F91",
+      delete: "\u5220\u9664",
+      confirmClear: "\u786E\u5B9A\u6E05\u7A7A\u5168\u90E8\u5386\u53F2\u8BB0\u5F55\uFF1F"
+    }
+  },
+  en: {
+    presets: {
+      mi: { name: "Warm Orange", desc: "Orange gradient for promos and events" },
+      ocean: { name: "Ocean Blue", desc: "Fresh gradient for links and docs" },
+      forest: { name: "Forest Green", desc: "Calm palette for internal tools" },
+      mono: { name: "Minimal B&W", desc: "High contrast, print-friendly" },
+      night: { name: "Night Purple", desc: "Dark background showcase style" }
+    },
+    dotTypes: {
+      rounded: "Rounded",
+      dots: "Dots",
+      "classy-rounded": "Classy rounded",
+      square: "Square",
+      "extra-rounded": "Extra rounded"
+    },
+    toast: {
+      restored: "History loaded \u2014 you can keep editing",
+      generateFailed: "Failed to generate QR code",
+      enterContent: "Please enter QR content first",
+      saved: "Saved to history",
+      pickImage: "Please choose an image file",
+      logoSize: "Logo should be under 512KB",
+      generateFirst: "Generate a QR code first",
+      pngDownloaded: "PNG download started",
+      svgDownloaded: "SVG download started",
+      copied: "PNG copied to clipboard",
+      copyFailed: "Copy failed",
+      cleared: "History cleared"
+    },
+    history: {
+      custom: "Custom",
+      untitled: "Untitled",
+      edit: "Edit",
+      delete: "Delete",
+      confirmClear: "Clear all history?"
+    }
+  },
+  ja: {
+    presets: {
+      mi: { name: "\u30A6\u30A9\u30FC\u30E0\u30AA\u30EC\u30F3\u30B8", desc: "\u30D7\u30ED\u30E2\u5411\u3051\u30AA\u30EC\u30F3\u30B8\u30B0\u30E9\u30C7\u30FC\u30B7\u30E7\u30F3" },
+      ocean: { name: "\u30AA\u30FC\u30B7\u30E3\u30F3\u30D6\u30EB\u30FC", desc: "\u30EA\u30F3\u30AF\u30FB\u8CC7\u6599\u5411\u3051\u306E\u723D\u3084\u304B\u306A\u914D\u8272" },
+      forest: { name: "\u30D5\u30A9\u30EC\u30B9\u30C8\u30B0\u30EA\u30FC\u30F3", desc: "\u843D\u3061\u7740\u3044\u305F\u5185\u90E8\u30C4\u30FC\u30EB\u5411\u3051" },
+      mono: { name: "\u30DF\u30CB\u30DE\u30EB\u767D\u9ED2", desc: "\u5370\u5237\u5411\u3051\u9AD8\u30B3\u30F3\u30C8\u30E9\u30B9\u30C8" },
+      night: { name: "\u30CA\u30A4\u30C8\u30D1\u30FC\u30D7\u30EB", desc: "\u30C0\u30FC\u30AF\u80CC\u666F\u5411\u3051\u30B9\u30BF\u30A4\u30EB" }
+    },
+    dotTypes: {
+      rounded: "\u89D2\u4E38",
+      dots: "\u30C9\u30C3\u30C8",
+      "classy-rounded": "\u30AF\u30E9\u30B7\u30C3\u30AF\u89D2\u4E38",
+      square: "\u30B9\u30AF\u30A8\u30A2",
+      "extra-rounded": "\u8D85\u89D2\u4E38"
+    },
+    toast: {
+      restored: "\u5C65\u6B74\u3092\u8AAD\u307F\u8FBC\u307F\u307E\u3057\u305F\u3002\u7DE8\u96C6\u3092\u7D9A\u3051\u3089\u308C\u307E\u3059",
+      generateFailed: "QR\u30B3\u30FC\u30C9\u306E\u751F\u6210\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
+      enterContent: "QR\u30B3\u30FC\u30C9\u306E\u5185\u5BB9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044",
+      saved: "\u5C65\u6B74\u306B\u4FDD\u5B58\u3057\u307E\u3057\u305F",
+      pickImage: "\u753B\u50CF\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044",
+      logoSize: "\u30ED\u30B4\u306F512KB\u672A\u6E80\u3092\u63A8\u5968\u3057\u307E\u3059",
+      generateFirst: "\u5148\u306BQR\u30B3\u30FC\u30C9\u3092\u751F\u6210\u3057\u3066\u304F\u3060\u3055\u3044",
+      pngDownloaded: "PNG\u306E\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u3092\u958B\u59CB\u3057\u307E\u3057\u305F",
+      svgDownloaded: "SVG\u306E\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u3092\u958B\u59CB\u3057\u307E\u3057\u305F",
+      copied: "PNG\u3092\u30AF\u30EA\u30C3\u30D7\u30DC\u30FC\u30C9\u306B\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F",
+      copyFailed: "\u30B3\u30D4\u30FC\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
+      cleared: "\u5C65\u6B74\u3092\u6D88\u53BB\u3057\u307E\u3057\u305F"
+    },
+    history: {
+      custom: "\u30AB\u30B9\u30BF\u30E0",
+      untitled: "\u7121\u984C",
+      edit: "\u7DE8\u96C6",
+      delete: "\u524A\u9664",
+      confirmClear: "\u5C65\u6B74\u3092\u3059\u3079\u3066\u6D88\u53BB\u3057\u307E\u3059\u304B\uFF1F"
+    }
+  },
+  ko: {
+    presets: {
+      mi: { name: "\uC6DC \uC624\uB80C\uC9C0", desc: "\uD64D\uBCF4\xB7\uC774\uBCA4\uD2B8\uC6A9 \uC624\uB80C\uC9C0 \uADF8\uB77C\uB370\uC774\uC158" },
+      ocean: { name: "\uC624\uC158 \uBE14\uB8E8", desc: "\uB9C1\uD06C\xB7\uBB38\uC11C\uC6A9 \uC2DC\uC6D0\uD55C \uC0C9\uC0C1" },
+      forest: { name: "\uD3EC\uB808\uC2A4\uD2B8 \uADF8\uB9B0", desc: "\uB0B4\uBD80 \uB3C4\uAD6C\uC6A9 \uCC28\uBD84\uD55C \uC0C9\uC0C1" },
+      mono: { name: "\uBBF8\uB2C8\uBA40 \uD751\uBC31", desc: "\uC778\uC1C4\uC6A9 \uACE0\uB300\uBE44" },
+      night: { name: "\uB098\uC774\uD2B8 \uD37C\uD50C", desc: "\uB2E4\uD06C \uBC30\uACBD \uC2A4\uD0C0\uC77C" }
+    },
+    dotTypes: {
+      rounded: "\uB465\uADFC \uBAA8\uC11C\uB9AC",
+      dots: "\uC810",
+      "classy-rounded": "\uD074\uB798\uC2DD \uB465\uADFC",
+      square: "\uC0AC\uAC01\uD615",
+      "extra-rounded": "\uCD08\uB465\uADFC"
+    },
+    toast: {
+      restored: "\uAE30\uB85D\uC744 \uBD88\uB7EC\uC654\uC2B5\uB2C8\uB2E4. \uACC4\uC18D \uD3B8\uC9D1\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4",
+      generateFailed: "QR \uCF54\uB4DC \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4",
+      enterContent: "QR \uB0B4\uC6A9\uC744 \uBA3C\uC800 \uC785\uB825\uD558\uC138\uC694",
+      saved: "\uAE30\uB85D\uC5D0 \uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4",
+      pickImage: "\uC774\uBBF8\uC9C0 \uD30C\uC77C\uC744 \uC120\uD0DD\uD558\uC138\uC694",
+      logoSize: "\uB85C\uACE0\uB294 512KB \uBBF8\uB9CC\uC744 \uAD8C\uC7A5\uD569\uB2C8\uB2E4",
+      generateFirst: "\uBA3C\uC800 QR \uCF54\uB4DC\uB97C \uC0DD\uC131\uD558\uC138\uC694",
+      pngDownloaded: "PNG \uB2E4\uC6B4\uB85C\uB4DC\uB97C \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4",
+      svgDownloaded: "SVG \uB2E4\uC6B4\uB85C\uB4DC\uB97C \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4",
+      copied: "PNG\uB97C \uD074\uB9BD\uBCF4\uB4DC\uC5D0 \uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4",
+      copyFailed: "\uBCF5\uC0AC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4",
+      cleared: "\uAE30\uB85D\uC744 \uC0AD\uC81C\uD588\uC2B5\uB2C8\uB2E4"
+    },
+    history: {
+      custom: "\uC0AC\uC6A9\uC790 \uC9C0\uC815",
+      untitled: "\uC81C\uBAA9 \uC5C6\uC74C",
+      edit: "\uD3B8\uC9D1",
+      delete: "\uC0AD\uC81C",
+      confirmClear: "\uBAA8\uB4E0 \uAE30\uB85D\uC744 \uC0AD\uC81C\uD560\uAE4C\uC694?"
+    }
+  },
+  zhTW: {
+    presets: {
+      mi: { name: "\u6696\u8272\u6A59", desc: "\u6A59\u8272\u6F38\u5C64\uFF0C\u9069\u5408\u5BA3\u50B3\u8207\u6D3B\u52D5\u9801" },
+      ocean: { name: "\u6D77\u6D0B\u85CD", desc: "\u6E05\u723D\u6F38\u5C64\uFF0C\u9069\u5408\u9023\u7D50\u8207\u6587\u4EF6" },
+      forest: { name: "\u68EE\u6797\u7DA0", desc: "\u6C89\u7A69\u914D\u8272\uFF0C\u9069\u5408\u5167\u90E8\u5DE5\u5177" },
+      mono: { name: "\u6975\u7C21\u9ED1\u767D", desc: "\u9AD8\u5C0D\u6BD4\u5370\u5237\u53CB\u5584" },
+      night: { name: "\u6697\u591C\u7D2B", desc: "\u6DF1\u8272\u80CC\u666F\u5C55\u793A\u9801" }
+    },
+    dotTypes: {
+      rounded: "\u5713\u89D2\u584A",
+      dots: "\u5713\u9EDE",
+      "classy-rounded": "\u7D93\u5178\u5713\u89D2",
+      square: "\u65B9\u584A",
+      "extra-rounded": "\u8D85\u5713\u89D2"
+    },
+    toast: {
+      restored: "\u5DF2\u8F09\u5165\u6B77\u53F2\u8A18\u9304\uFF0C\u53EF\u7E7C\u7E8C\u7DE8\u8F2F",
+      generateFailed: "\u7522\u751F\u5931\u6557",
+      enterContent: "\u8ACB\u5148\u8F38\u5165 QR Code \u5167\u5BB9",
+      saved: "\u5DF2\u5132\u5B58\u5230\u6B77\u53F2\u8A18\u9304",
+      pickImage: "\u8ACB\u9078\u64C7\u5716\u7247\u6A94\u6848",
+      logoSize: "Logo \u5EFA\u8B70\u5C0F\u65BC 512KB",
+      generateFirst: "\u8ACB\u5148\u7522\u751F QR Code",
+      pngDownloaded: "PNG \u5DF2\u958B\u59CB\u4E0B\u8F09",
+      svgDownloaded: "SVG \u5DF2\u958B\u59CB\u4E0B\u8F09",
+      copied: "\u5DF2\u8907\u88FD PNG \u5230\u526A\u8CBC\u7C3F",
+      copyFailed: "\u8907\u88FD\u5931\u6557",
+      cleared: "\u6B77\u53F2\u5DF2\u6E05\u7A7A"
+    },
+    history: {
+      custom: "\u81EA\u8A02",
+      untitled: "\u672A\u547D\u540D",
+      edit: "\u7DE8\u8F2F",
+      delete: "\u522A\u9664",
+      confirmClear: "\u78BA\u5B9A\u6E05\u7A7A\u5168\u90E8\u6B77\u53F2\u8A18\u9304\uFF1F"
+    }
+  }
+};
+var ROOT_PAGES = /\/(?:index\.html|about\.html|contact\.html|privacy\.html|terms\.html)?$/;
+function detectBrowserLocale() {
+  const langs = navigator.languages?.length ? [...navigator.languages] : [navigator.language || "en"];
+  for (const raw of langs) {
+    const nav = raw.toLowerCase();
+    if (nav.startsWith("zh-tw") || nav.startsWith("zh-hk") || nav.startsWith("zh-hant")) return "zhTW";
+    if (nav.startsWith("zh")) return "zh";
+    if (nav.startsWith("ja")) return "ja";
+    if (nav.startsWith("ko")) return "ko";
+    if (nav.startsWith("en")) return "en";
+  }
+  return "en";
+}
+function getLocale() {
+  const path = window.location.pathname;
+  for (const { pattern, locale: locale2 } of PATH_LOCALES) {
+    if (pattern.test(path)) return locale2;
+  }
+  if (ROOT_PAGES.test(path)) return "zh";
+  const stored = localStorage.getItem(STORAGE_KEY2);
+  if (stored && stored in messages) return stored;
+  return detectBrowserLocale();
+}
+function getHtmlLang(locale2) {
+  const map = {
+    zh: "zh-CN",
+    en: "en",
+    ja: "ja",
+    ko: "ko",
+    zhTW: "zh-TW"
+  };
+  return map[locale2];
+}
+function presetLabel(id, field, locale2 = getLocale()) {
+  const presets = messages[locale2].presets;
+  return presets[id]?.[field] ?? id;
+}
+function dotTypeLabel(value, locale2 = getLocale()) {
+  const dots = messages[locale2].dotTypes;
+  return dots[value] ?? value;
+}
+function msg(key, locale2 = getLocale()) {
+  return messages[locale2].toast[key];
+}
+function hist(key, locale2 = getLocale()) {
+  return messages[locale2].history[key];
+}
+function bcp47Locale(locale2) {
+  const map = {
+    zh: "zh-CN",
+    en: "en-US",
+    ja: "ja-JP",
+    ko: "ko-KR",
+    zhTW: "zh-TW"
+  };
+  return map[locale2];
+}
+
 // src/utils.ts
 function createId() {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
@@ -1363,10 +1616,15 @@ function createId() {
   }
   return `qr_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 }
-function formatDateTime(ts) {
-  const d = new Date(ts);
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+function formatDateTime(ts, locale2 = "zh") {
+  return new Date(ts).toLocaleString(bcp47Locale(locale2), {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
 }
 function truncate(text, max = 48) {
   const s = String(text ?? "").replace(/\s+/g, " ");
@@ -1404,6 +1662,7 @@ var HistoryView = class {
     this.listEl = opts.listEl;
     this.emptyEl = opts.emptyEl;
     this.countEl = opts.countEl;
+    this.locale = opts.locale;
     this.onRestore = opts.onRestore;
   }
   render() {
@@ -1419,18 +1678,18 @@ var HistoryView = class {
     const card = document.createElement("article");
     card.className = "history-card";
     card.dataset.id = item.id;
-    const presetName = STYLE_PRESETS[item.style.presetId]?.name ?? "\u81EA\u5B9A\u4E49";
-    const title = item.label || truncate(item.style.text, 36) || "\u672A\u547D\u540D";
+    const presetName = STYLE_PRESETS[item.style.presetId] ? presetLabel(item.style.presetId, "name", this.locale) : hist("custom", this.locale);
+    const title = item.label || truncate(item.style.text, 36) || hist("untitled", this.locale);
     card.innerHTML = `
             <div class="history-card-thumb" data-thumb></div>
             <div class="history-card-body">
                 <h3 class="history-card-title" title="${escapeHtml(item.style.text)}">${escapeHtml(title)}</h3>
-                <p class="history-card-meta">${escapeHtml(formatDateTime(item.createdAt))} \xB7 ${escapeHtml(presetName)} \xB7 ${item.style.size}px</p>
+                <p class="history-card-meta">${escapeHtml(formatDateTime(item.createdAt, this.locale))} \xB7 ${escapeHtml(presetName)} \xB7 ${item.style.size}px</p>
                 <div class="history-card-actions">
-                    <button type="button" class="btn btn-ghost btn-sm" data-action="restore">\u7F16\u8F91</button>
+                    <button type="button" class="btn btn-ghost btn-sm" data-action="restore">${escapeHtml(hist("edit", this.locale))}</button>
                     <button type="button" class="btn btn-ghost btn-sm" data-action="png">PNG</button>
                     <button type="button" class="btn btn-ghost btn-sm" data-action="svg">SVG</button>
-                    <button type="button" class="btn btn-ghost btn-sm btn-danger-text" data-action="delete">\u5220\u9664</button>
+                    <button type="button" class="btn btn-ghost btn-sm btn-danger-text" data-action="delete">${escapeHtml(hist("delete", this.locale))}</button>
                 </div>
             </div>
         `;
@@ -1527,6 +1786,8 @@ var HistoryStore = class {
 };
 
 // src/app.ts
+var locale = getLocale();
+document.documentElement.lang = getHtmlLang(locale);
 var store = new HistoryStore();
 var els = {
   form: queryRequired("qr-form"),
@@ -1563,15 +1824,16 @@ var historyView = new HistoryView({
   listEl: els.historyList,
   emptyEl: els.historyEmpty,
   countEl: els.historyCount,
+  locale,
   onRestore: (style) => {
     fillForm(style);
     renderPreview();
-    showToast("\u5DF2\u8F7D\u5165\u5386\u53F2\u8BB0\u5F55\uFF0C\u53EF\u7EE7\u7EED\u7F16\u8F91");
+    showToast(msg("restored"));
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
-function showToast(msg) {
-  els.toast.textContent = msg;
+function showToast(text) {
+  els.toast.textContent = text;
   els.toast.classList.add("is-visible");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => els.toast.classList.remove("is-visible"), 2400);
@@ -1633,13 +1895,13 @@ function renderPreview() {
     els.preview.innerHTML = "";
     currentQr = null;
     currentStyle = null;
-    showToast(err instanceof Error ? err.message : "\u751F\u6210\u5931\u8D25");
+    showToast(err instanceof Error ? err.message : msg("generateFailed"));
   }
 }
 var debouncedPreview = debounce(renderPreview, 300);
 function saveToHistory() {
   if (!currentStyle?.text) {
-    showToast("\u8BF7\u5148\u8F93\u5165\u4E8C\u7EF4\u7801\u5185\u5BB9");
+    showToast(msg("enterContent"));
     return;
   }
   store.add({
@@ -1647,7 +1909,7 @@ function saveToHistory() {
     style: { ...currentStyle }
   });
   historyView.render();
-  showToast("\u5DF2\u4FDD\u5B58\u5230\u5386\u53F2\u8BB0\u5F55");
+  showToast(msg("saved"));
 }
 function initPresetGrid() {
   els.presetGrid.innerHTML = "";
@@ -1656,7 +1918,7 @@ function initPresetGrid() {
     btn.type = "button";
     btn.className = "preset-card";
     btn.dataset.preset = preset.id;
-    btn.innerHTML = `<span class="preset-card-name">${preset.name}</span><span class="preset-card-desc">${preset.desc}</span>`;
+    btn.innerHTML = `<span class="preset-card-name">${presetLabel(preset.id, "name")}</span><span class="preset-card-desc">${presetLabel(preset.id, "desc")}</span>`;
     btn.addEventListener("click", () => {
       els.preset.value = preset.id;
       fillForm(applyPresetToForm(readForm(), preset.id));
@@ -1666,16 +1928,18 @@ function initPresetGrid() {
   }
 }
 function initSelects() {
+  els.dotType.innerHTML = "";
+  els.preset.innerHTML = "";
   for (const d of DOT_TYPES) {
     const opt = document.createElement("option");
     opt.value = d.value;
-    opt.textContent = d.label;
+    opt.textContent = dotTypeLabel(d.value);
     els.dotType.appendChild(opt);
   }
   for (const p of Object.values(STYLE_PRESETS)) {
     const opt = document.createElement("option");
     opt.value = p.id;
-    opt.textContent = p.name;
+    opt.textContent = presetLabel(p.id, "name");
     els.preset.appendChild(opt);
   }
 }
@@ -1693,11 +1957,11 @@ function bindEvents() {
     const file = els.logo.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      showToast("\u8BF7\u9009\u62E9\u56FE\u7247\u6587\u4EF6");
+      showToast(msg("pickImage"));
       return;
     }
     if (file.size > 512 * 1024) {
-      showToast("Logo \u5EFA\u8BAE\u5C0F\u4E8E 512KB");
+      showToast(msg("logoSize"));
     }
     logoDataUrl = await fileToDataUrl(file);
     updateLogoUi();
@@ -1715,37 +1979,37 @@ function bindEvents() {
   });
   els.btnDownloadPng.addEventListener("click", async () => {
     if (!currentQr || !currentStyle) {
-      showToast("\u8BF7\u5148\u751F\u6210\u4E8C\u7EF4\u7801");
+      showToast(msg("generateFirst"));
       return;
     }
     await downloadQr(currentQr, "png", currentStyle.label || "qrcode");
-    showToast("PNG \u5DF2\u5F00\u59CB\u4E0B\u8F7D");
+    showToast(msg("pngDownloaded"));
   });
   els.btnDownloadSvg.addEventListener("click", async () => {
     if (!currentQr || !currentStyle) {
-      showToast("\u8BF7\u5148\u751F\u6210\u4E8C\u7EF4\u7801");
+      showToast(msg("generateFirst"));
       return;
     }
     await downloadQr(currentQr, "svg", currentStyle.label || "qrcode");
-    showToast("SVG \u5DF2\u5F00\u59CB\u4E0B\u8F7D");
+    showToast(msg("svgDownloaded"));
   });
   els.btnCopy.addEventListener("click", async () => {
     if (!currentQr) {
-      showToast("\u8BF7\u5148\u751F\u6210\u4E8C\u7EF4\u7801");
+      showToast(msg("generateFirst"));
       return;
     }
     try {
       await copyQrToClipboard(currentQr);
-      showToast("\u5DF2\u590D\u5236 PNG \u5230\u526A\u8D34\u677F");
+      showToast(msg("copied"));
     } catch (err) {
-      showToast(err instanceof Error ? err.message : "\u590D\u5236\u5931\u8D25");
+      showToast(err instanceof Error ? err.message : msg("copyFailed"));
     }
   });
   els.btnClearHistory.addEventListener("click", () => {
-    if (!confirm("\u786E\u5B9A\u6E05\u7A7A\u5168\u90E8\u5386\u53F2\u8BB0\u5F55\uFF1F")) return;
+    if (!confirm(hist("confirmClear"))) return;
     store.clear();
     historyView.render();
-    showToast("\u5386\u53F2\u5DF2\u6E05\u7A7A");
+    showToast(msg("cleared"));
   });
 }
 function init() {

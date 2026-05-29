@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlyQRCode — カスタムスタイル、リアルタイムプレビュー、PNG/SVG出力。ブラウザ内でローカル処理。">
+    <meta name="keywords" content="QRコード,QRコード生成,無料,オンライン,QRメーカー">
+    <meta name="robots" content="index, follow">
+    <title>FlyQRCode - 無料オンラインQRコード生成</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/">
+    <link rel="stylesheet" href="../css/main.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6654903504279698"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>QRコード生成</h1>
+            <p>スタイル調整、プレビュー、履歴、PNG / SVG ワンクリック保存</p>
+            <nav class="site-nav" aria-label="Navigation">
+    <a href="./index.html">ホーム</a>
+    <a href="./about.html">概要</a>
+    <a href="./contact.html">お問い合わせ</a>
+    <a href="./privacy.html">プライバシー</a>
+    <a href="./terms.html">利用規約</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <div class="workspace">
+            <main class="main-column">
+                <section class="panel">
+                    <div class="panel-head"><h2>内容とスタイル</h2></div>
+                    <div class="panel-body">
+                        <form id="qr-form" autocomplete="off">
+                            <div class="form-grid">
+                                <div class="field span-2">
+                                    <label for="field-text">QRコードの内容 *</label>
+                                    <textarea id="field-text" placeholder="URL、テキスト、WiFi設定など" required></textarea>
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-label">メモ名（任意・ダウンロード名と履歴用）</label>
+                                    <input type="text" id="field-label" placeholder="ファイル名に使用。空欄でも可">
+                                </div>
+                                <div class="field span-2">
+                                    <label>スタイルプリセット</label>
+                                    <div id="preset-grid" class="preset-grid"></div>
+                                    <select id="field-preset" hidden aria-hidden="true"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-size">サイズ <span id="field-size-val">320px</span></label>
+                                    <input type="range" id="field-size" min="200" max="800" step="10" value="320">
+                                </div>
+                                <div class="field">
+                                    <label for="field-margin">余白</label>
+                                    <input type="number" id="field-margin" min="0" max="80" value="12">
+                                </div>
+                                <div class="field">
+                                    <label for="field-dot-type">ドット形状</label>
+                                    <select id="field-dot-type"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-fg-color">前景色</label>
+                                    <input type="color" id="field-fg-color" value="#111111">
+                                    <div class="field-inline" style="margin-top:8px">
+                                        <input type="checkbox" id="field-use-gradient">
+                                        <label for="field-use-gradient" style="margin:0;font-weight:400">プリセットグラデーションを使用</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="field-bg-color">背景色</label>
+                                    <input type="color" id="field-bg-color" value="#ffffff">
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-logo">中央ロゴ（任意）</label>
+                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <p class="field-hint">正方形の透過PNG推奨、512KB未満</p>
+                                    <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>ロゴを削除</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <section class="panel content-section">
+                    <div class="panel-head"><h2>使い方</h2></div>
+                    <div class="panel-body prose">
+                        <p>FlyQRCode は数秒でスキャン可能なQRコードを作成できます。インストールや登録は不要です。</p>
+                        <h3>クイックスタート</h3>
+                        <ol>
+                            <li>「QRコードの内容」にURL、テキスト、WiFi文字列を貼り付け；</li><li>プリセットを選ぶか、色・形状・サイズを調整；</li><li>必要なら中央ロゴを追加；</li><li>「PNGをダウンロード」または「SVGをダウンロード」をクリック。</li>
+                        </ol>
+                        <h3>よくある用途</h3>
+                        <ul><li>マーケティング — ポスターやチラシにリンク；</li><li>イベント — 受付、抽選、資料配布；</li><li>店舗WiFi — パスワード入力なしで接続；</li><li>デジタル名刺 — 連絡先やSNS。</li></ul>
+                        <h3>デザインのヒント</h3><p>印刷には「ミニマル白黒」プリセットと十分な余白を。画面表示はグラデーションも有効です。実機で必ずテストしてください。</p>
+                        <h3>プライバシー</h3>
+                        <p>入力内容はブラウザ内で処理され、サーバーに送信されません。 <a href="./privacy.html">プライバシー</a> · <a href="./about.html">概要</a></p>
+                    </div>
+                </section>
+            </main>
+            <aside class="side-column">
+                <section class="panel preview-panel">
+                    <div class="panel-head"><h2>プレビュー</h2></div>
+                    <div class="panel-body">
+                        <div class="preview-stage"><div id="qr-preview"></div></div>
+                        <div class="preview-actions">
+                            <button type="button" class="btn btn-primary" id="btn-generate">生成して保存</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-png">PNGをダウンロード</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-svg">SVGをダウンロード</button>
+                            <button type="button" class="btn btn-ghost" id="btn-copy">画像をコピー</button>
+                        </div>
+                    </div>
+                </section>
+                <section class="panel history-panel">
+                    <div class="panel-head">
+                        <h2>生成履歴</h2>
+                        <span class="badge"><span id="history-count">0</span> <span id="history-count-suffix">件</span></span>
+                    </div>
+                    <div class="panel-body">
+                        <p id="history-empty" class="history-empty">履歴はありません。「生成して保存」を押すとここに表示されます。</p>
+                        <div id="history-list" class="history-list"></div>
+                        <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-history" style="margin-top:12px;width:100%">履歴を消去</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer">
+        <a href="./index.html">ホーム</a>
+        <a href="./about.html">概要</a>
+        <a href="./contact.html">お問い合わせ</a>
+        <a href="./privacy.html">プライバシー</a>
+        <a href="./terms.html">利用規約</a>
+    </nav>
+    <p class="footer-note">QR内容はブラウザ内で処理されます。履歴は端末にのみ保存され、アップロードされません。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> © FlyQRCode. All rights reserved.</p>
+</footer>
+<script>(function(){var y=document.getElementById("footer-year");if(y)y.textContent=String(new Date().getFullYear());})();</script>
+
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookieと広告について</p>
+        <p class="cookie-text">基本機能のためCookieを使用し、同意いただいた場合はGoogle等のパーソナライズ広告を表示します。 <a href="./privacy.html">プライバシーポリシー</a>. <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google</a></p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">同意する</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">必須Cookieのみ</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

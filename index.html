@@ -3,14 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
+    <script src="./js/locale-redirect.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FlyQRCode 免费在线二维码生成器 — 自定义颜色与样式，实时预览，支持 PNG/SVG 下载，数据本地处理，保护隐私。">
     <meta name="keywords" content="二维码生成,在线二维码,免费二维码,QR code generator,二维码制作,二维码下载">
     <meta name="robots" content="index, follow">
     <title>FlyQRCode - 免费在线二维码生成工具</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/">
     <link rel="stylesheet" href="./css/main.css">
     <!-- 通过 AdSense 审核后，将 Google 提供的广告代码粘贴到此处 -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6654903504279698"
@@ -29,6 +33,7 @@
     <a href="./contact.html">联系我们</a>
     <a href="./privacy.html">隐私政策</a>
     <a href="./terms.html">使用条款</a>
+    <span data-lang-switch class="lang-switch"></span>
 </nav>
 
         </header>
@@ -148,7 +153,7 @@
                 <section class="panel history-panel">
                     <div class="panel-head">
                         <h2>生成历史</h2>
-                        <span class="badge"><span id="history-count">0</span> 条</span>
+                        <span class="badge"><span id="history-count">0</span> <span id="history-count-suffix">条</span></span>
                     </div>
                     <div class="panel-body">
                         <p id="history-empty" class="history-empty">暂无记录，点击「生成并保存历史」后会显示在这里</p>
@@ -198,6 +203,7 @@
 </div>
 
     <script src="./js/site-config.js"></script>
+    <script src="./js/lang-switch.js"></script>
     <script src="./js/cookie-consent.js"></script>
 
     <script type="module" src="./js/app.js"></script>

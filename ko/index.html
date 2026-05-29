@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlyQRCode — 맞춤 스타일, 실시간 미리보기, PNG/SVG 다운로드. 브라우저에서 로컬 처리.">
+    <meta name="keywords" content="QR코드,QR생성,무료,온라인,QR메이커">
+    <meta name="robots" content="index, follow">
+    <title>FlyQRCode - 무료 온라인 QR 코드 생성기</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/">
+    <link rel="stylesheet" href="../css/main.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6654903504279698"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>QR 코드 생성</h1>
+            <p>스타일 설정, 미리보기, 기록, PNG / SVG 원클릭 다운로드</p>
+            <nav class="site-nav" aria-label="Navigation">
+    <a href="./index.html">홈</a>
+    <a href="./about.html">소개</a>
+    <a href="./contact.html">문의</a>
+    <a href="./privacy.html">개인정보</a>
+    <a href="./terms.html">이용약관</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <div class="workspace">
+            <main class="main-column">
+                <section class="panel">
+                    <div class="panel-head"><h2>내용 및 스타일</h2></div>
+                    <div class="panel-body">
+                        <form id="qr-form" autocomplete="off">
+                            <div class="form-grid">
+                                <div class="field span-2">
+                                    <label for="field-text">QR 내용 *</label>
+                                    <textarea id="field-text" placeholder="URL, 텍스트, WiFi 설정 등" required></textarea>
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-label">메모 이름 (선택, 다운로드 및 기록용)</label>
+                                    <input type="text" id="field-label" placeholder="파일명에 사용. 비워도 됨">
+                                </div>
+                                <div class="field span-2">
+                                    <label>스타일 프리셋</label>
+                                    <div id="preset-grid" class="preset-grid"></div>
+                                    <select id="field-preset" hidden aria-hidden="true"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-size">크기 <span id="field-size-val">320px</span></label>
+                                    <input type="range" id="field-size" min="200" max="800" step="10" value="320">
+                                </div>
+                                <div class="field">
+                                    <label for="field-margin">여백</label>
+                                    <input type="number" id="field-margin" min="0" max="80" value="12">
+                                </div>
+                                <div class="field">
+                                    <label for="field-dot-type">도트 모양</label>
+                                    <select id="field-dot-type"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-fg-color">전경색</label>
+                                    <input type="color" id="field-fg-color" value="#111111">
+                                    <div class="field-inline" style="margin-top:8px">
+                                        <input type="checkbox" id="field-use-gradient">
+                                        <label for="field-use-gradient" style="margin:0;font-weight:400">프리셋 그라데이션 사용</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="field-bg-color">배경색</label>
+                                    <input type="color" id="field-bg-color" value="#ffffff">
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-logo">중앙 로고 (선택)</label>
+                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <p class="field-hint">정사각형 투명 PNG 권장, 512KB 미만</p>
+                                    <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>로고 제거</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <section class="panel content-section">
+                    <div class="panel-head"><h2>사용 방법</h2></div>
+                    <div class="panel-body prose">
+                        <p>FlyQRCode로 몇 초 만에 스캔 가능한 QR 코드를 만들 수 있습니다. 설치나 가입이 필요 없습니다.</p>
+                        <h3>빠른 시작</h3>
+                        <ol>
+                            <li>「QR 내용」에 URL, 텍스트, WiFi 문자열 붙여넣기;</li><li>프리셋 선택 또는 색상·모양·크기 조정;</li><li>필요 시 중앙 로고 추가;</li><li>「PNG 다운로드」 또는 「SVG 다운로드」 클릭.</li>
+                        </ol>
+                        <h3>활용 예</h3>
+                        <ul><li>마케팅 — 포스터·전단지 링크;</li><li>이벤트 — 체크인, 경품, 자료 링크;</li><li>매장 WiFi — 비밀번호 없이 연결;</li><li>디지털 명함 — 연락처·SNS.</li></ul>
+                        <h3>디자인 팁</h3><p>인쇄용은 「미니멀 흑백」 프리셋과 충분한 여백을 권장합니다. 실제 기기로 테스트하세요.</p>
+                        <h3>개인정보</h3>
+                        <p>입력 내용은 브라우저에서 처리되며 서버로 업로드되지 않습니다. <a href="./privacy.html">개인정보</a> · <a href="./about.html">소개</a></p>
+                    </div>
+                </section>
+            </main>
+            <aside class="side-column">
+                <section class="panel preview-panel">
+                    <div class="panel-head"><h2>미리보기</h2></div>
+                    <div class="panel-body">
+                        <div class="preview-stage"><div id="qr-preview"></div></div>
+                        <div class="preview-actions">
+                            <button type="button" class="btn btn-primary" id="btn-generate">생성 및 저장</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-png">PNG 다운로드</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-svg">SVG 다운로드</button>
+                            <button type="button" class="btn btn-ghost" id="btn-copy">이미지 복사</button>
+                        </div>
+                    </div>
+                </section>
+                <section class="panel history-panel">
+                    <div class="panel-head">
+                        <h2>생성 기록</h2>
+                        <span class="badge"><span id="history-count">0</span> <span id="history-count-suffix">개</span></span>
+                    </div>
+                    <div class="panel-body">
+                        <p id="history-empty" class="history-empty">기록이 없습니다. 「생성 및 저장」을 누르면 여기에 표시됩니다.</p>
+                        <div id="history-list" class="history-list"></div>
+                        <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-history" style="margin-top:12px;width:100%">기록 삭제</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer">
+        <a href="./index.html">홈</a>
+        <a href="./about.html">소개</a>
+        <a href="./contact.html">문의</a>
+        <a href="./privacy.html">개인정보</a>
+        <a href="./terms.html">이용약관</a>
+    </nav>
+    <p class="footer-note">QR 내용은 브라우저에서 처리됩니다. 기록은 기기에만 저장되며 업로드되지 않습니다.</p>
+    <p class="footer-copy">© <span id="footer-year"></span> © FlyQRCode. All rights reserved.</p>
+</footer>
+<script>(function(){var y=document.getElementById("footer-year");if(y)y.textContent=String(new Date().getFullYear());})();</script>
+
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">쿠키 및 광고</p>
+        <p class="cookie-text">필수 기능을 위해 쿠키를 사용하며, 동의 시 Google 등 맞춤 광고를 표시합니다. <a href="./privacy.html">개인정보 처리방침</a>. <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google</a></p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">동의</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">필수 쿠키만</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

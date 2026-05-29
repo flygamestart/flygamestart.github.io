@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlyQRCode — Free online QR code generator with custom styles, live preview, PNG/SVG export. Processed locally in your browser.">
+    <meta name="keywords" content="QR code generator,free QR code,online QR maker,QR code download,custom QR code">
+    <meta name="robots" content="index, follow">
+    <title>FlyQRCode - Free Online QR Code Generator</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/">
+    <link rel="stylesheet" href="../css/main.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6654903504279698"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="page">
+        <header class="banner">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>QR Code Generator</h1>
+            <p>Custom styles, live preview, history, and one-click PNG / SVG download</p>
+            <nav class="site-nav" aria-label="Main navigation">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./privacy.html">Privacy</a>
+    <a href="./terms.html">Terms</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+
+        <div class="workspace">
+            <main class="main-column">
+                <section class="panel">
+                    <div class="panel-head">
+                        <h2>Content &amp; style</h2>
+                    </div>
+                    <div class="panel-body">
+                        <form id="qr-form" autocomplete="off">
+                            <div class="form-grid">
+                                <div class="field span-2">
+                                    <label for="field-text">QR content *</label>
+                                    <textarea id="field-text" placeholder="URL, text, WiFi config, etc." required></textarea>
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-label">Label (optional, for downloads &amp; history)</label>
+                                    <input type="text" id="field-label" placeholder="Used in filenames; leave blank if you prefer">
+                                </div>
+                                <div class="field span-2">
+                                    <label>Style presets</label>
+                                    <div id="preset-grid" class="preset-grid"></div>
+                                    <select id="field-preset" hidden aria-hidden="true"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-size">Size <span id="field-size-val">320px</span></label>
+                                    <input type="range" id="field-size" min="200" max="800" step="10" value="320">
+                                </div>
+                                <div class="field">
+                                    <label for="field-margin">Margin</label>
+                                    <input type="number" id="field-margin" min="0" max="80" value="12">
+                                </div>
+                                <div class="field">
+                                    <label for="field-dot-type">Dot shape</label>
+                                    <select id="field-dot-type"></select>
+                                </div>
+                                <div class="field">
+                                    <label for="field-fg-color">Foreground</label>
+                                    <input type="color" id="field-fg-color" value="#111111">
+                                    <div class="field-inline" style="margin-top:8px">
+                                        <input type="checkbox" id="field-use-gradient">
+                                        <label for="field-use-gradient" style="margin:0;font-weight:400">Use preset gradient</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="field-bg-color">Background</label>
+                                    <input type="color" id="field-bg-color" value="#ffffff">
+                                </div>
+                                <div class="field span-2">
+                                    <label for="field-logo">Center logo (optional)</label>
+                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <p class="field-hint">Square transparent PNG recommended, &lt; 512KB</p>
+                                    <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>Remove logo</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <section class="panel content-section">
+                    <div class="panel-head">
+                        <h2>How to use</h2>
+                    </div>
+                    <div class="panel-body prose">
+                        <p>
+                            FlyQRCode helps you create scannable QR codes in seconds — no install, no sign-up.
+                            Enter your content and preview updates on the right. Download when you're ready for print or sharing.
+                        </p>
+                        <h3>Quick start</h3>
+                        <ol>
+                            <li>Paste a URL, plain text, or WiFi string into <strong>QR content</strong>;</li>
+                            <li>Pick a preset or customize colors, dot shape, and size;</li>
+                            <li>Optionally add a center logo for branding;</li>
+                            <li>Click <strong>Download PNG</strong> or <strong>Download SVG</strong>.</li>
+                        </ol>
+                        <h3>Common uses</h3>
+                        <ul>
+                            <li><strong>Marketing</strong> — landing pages on posters and flyers;</li>
+                            <li><strong>Events</strong> — check-in, giveaways, resource links;</li>
+                            <li><strong>Guest WiFi</strong> — connect without typing passwords;</li>
+                            <li><strong>Digital cards</strong> — contact info or social profiles.</li>
+                        </ul>
+                        <h3>Design tips</h3>
+                        <p>
+                            For print, use the <strong>Minimal B&amp;W</strong> preset with enough quiet zone (margin).
+                            For screens, try gradients and rounded dots. Test with a real phone before going live.
+                        </p>
+                        <h3>Privacy</h3>
+                        <p>
+                            Your input is processed locally in the browser — we do not upload it to our servers.
+                            Read our <a href="./privacy.html">Privacy Policy</a> and <a href="./about.html">About</a> pages.
+                        </p>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="side-column">
+                <section class="panel preview-panel">
+                    <div class="panel-head">
+                        <h2>Preview</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="preview-stage">
+                            <div id="qr-preview"></div>
+                        </div>
+                        <div class="preview-actions">
+                            <button type="button" class="btn btn-primary" id="btn-generate">Generate &amp; save</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-png">Download PNG</button>
+                            <button type="button" class="btn btn-secondary" id="btn-download-svg">Download SVG</button>
+                            <button type="button" class="btn btn-ghost" id="btn-copy">Copy image</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel history-panel">
+                    <div class="panel-head">
+                        <h2>History</h2>
+                        <span class="badge"><span id="history-count">0</span> <span id="history-count-suffix">items</span></span>
+                    </div>
+                    <div class="panel-body">
+                        <p id="history-empty" class="history-empty">No entries yet. Click “Generate &amp; save” to add one here.</p>
+                        <div id="history-list" class="history-list"></div>
+                        <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-history" style="margin-top:12px;width:100%">Clear history</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
+    </nav>
+    <p class="footer-note">QR content is processed locally in your browser. History stays on this device and is never uploaded.</p>
+    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. All rights reserved.</p>
+</footer>
+<script>
+    (function () {
+        var yearEl = document.getElementById("footer-year");
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+</script>
+
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookies &amp; ads</p>
+        <p class="cookie-text">
+            We use cookies for essential site features and, with your consent, personalized ads from Google and other partners.
+            See our <a href="./privacy.html">Privacy Policy</a>. Manage preferences in
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
+        </p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">Accept</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">Essential only</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+
+    <script type="module" src="../js/app.js"></script>
+</body>
+
+</html>
