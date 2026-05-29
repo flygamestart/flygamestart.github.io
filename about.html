@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="了解 FlyQRCode — 免费在线二维码生成工具，支持自定义样式、PNG/SVG 下载，数据本地处理。">
+    <title>关于我们 - FlyQRCode</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <div class="page">
+        <header class="banner banner-compact">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>关于我们</h1>
+            <p>为个人与团队提供简单、可靠的二维码生成服务</p>
+            <nav class="site-nav" aria-label="主导航">
+    <a href="./index.html">首页</a>
+    <a href="./about.html">关于我们</a>
+    <a href="./contact.html">联系我们</a>
+    <a href="./privacy.html">隐私政策</a>
+    <a href="./terms.html">使用条款</a>
+</nav>
+
+        </header>
+
+        <article class="panel legal-page">
+            <div class="panel-body prose">
+                <h2>我们是谁</h2>
+                <p>
+                    FlyQRCode 是一款面向普通用户与内容创作者的<strong>免费在线二维码生成工具</strong>。
+                    您可以在浏览器中输入链接、文本或 WiFi 配置，实时预览二维码效果，并下载 PNG 或 SVG 文件，
+                    用于海报、名片、活动物料与社交媒体分享。
+                </p>
+
+                <h2>产品特点</h2>
+                <ul>
+                    <li><strong>无需注册</strong>：打开网页即可使用，降低使用门槛。</li>
+                    <li><strong>样式可定制</strong>：支持多种预设风格、码点形状、颜色与中心 Logo。</li>
+                    <li><strong>本地处理</strong>：二维码内容由您的浏览器生成，我们不会将您输入的文本上传到服务器。</li>
+                    <li><strong>历史记录</strong>：生成记录保存在本机浏览器中，方便再次下载或编辑。</li>
+                </ul>
+
+                <h2>适用场景</h2>
+                <p>
+                    网站推广、线下活动签到、产品说明书、社群邀请、电子名片、门店 WiFi 连接指引等。
+                    无论您是自媒体作者、独立开发者还是小微企业主，都可以快速制作清晰可扫的二维码。
+                </p>
+
+                <h2>内容政策</h2>
+                <p>
+                    我们鼓励用户生成合法、正当的二维码内容。请勿利用本工具制作欺诈、侵权、色情、暴力或其他违反法律法规与
+                    <a href="./terms.html">使用条款</a> 的内容。我们保留在必要时配合监管与平台政策采取行动的权利。
+                </p>
+
+                <h2>网站运营说明</h2>
+                <p>
+                    为维持免费服务与服务器成本，本站可能展示由 Google AdSense 等第三方提供的广告。
+                    广告内容由第三方决定，不代表 FlyQRCode 的立场。有关数据与 Cookie 的说明，请参阅
+                    <a href="./privacy.html">隐私政策</a>。
+                </p>
+
+                <p>如有合作或反馈，欢迎通过<a href="./contact.html">联系我们</a>页面与我们取得联系。</p>
+            </div>
+        </article>
+
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="页脚导航">
+        <a href="./index.html">首页</a>
+        <a href="./about.html">关于我们</a>
+        <a href="./contact.html">联系我们</a>
+        <a href="./privacy.html">隐私政策</a>
+        <a href="./terms.html">使用条款</a>
+    </nav>
+    <p class="footer-note">二维码内容仅在您的浏览器本地处理；历史记录保存在本机，不会上传至服务器。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. 保留所有权利。</p>
+</footer>
+<script>
+    (function () {
+        var yearEl = document.getElementById("footer-year");
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+</script>
+
+    </div>
+
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookie 与广告说明</p>
+        <p class="cookie-text">
+            我们使用 Cookie 以保障网站基本功能，并在您同意后展示由 Google 等第三方提供的个性化广告。
+            详情请参阅<a href="./privacy.html">隐私政策</a>。您可随时在
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google 广告设置</a>
+            中管理偏好。
+        </p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">接受</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">仅必要 Cookie</button>
+        </div>
+    </div>
+</div>
+
+    <script src="./js/site-config.js"></script>
+    <script src="./js/cookie-consent.js"></script>
+</body>
+
+</html>
