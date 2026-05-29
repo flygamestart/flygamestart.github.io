@@ -1151,7 +1151,7 @@ var STYLE_PRESETS = {
     name: "\u6696\u8272\u6A59",
     desc: "\u6A59\u8272\u6E10\u53D8\uFF0C\u9002\u5408\u5BA3\u4F20\u4E0E\u6D3B\u52A8\u9875",
     style: {
-      fgColor: "#333333",
+      fgColor: "#ff6700",
       bgColor: "#ffffff",
       dotType: "rounded",
       cornerSquareType: "extra-rounded",
@@ -1219,21 +1219,22 @@ var STYLE_PRESETS = {
       fgGradient: null
     }
   },
-  night: {
-    id: "night",
-    name: "\u6697\u591C\u7D2B",
-    desc: "\u6DF1\u8272\u80CC\u666F\u5C55\u793A\u9875",
+  violet: {
+    id: "violet",
+    name: "\u6DE1\u96C5\u7D2B",
+    desc: "\u6D45\u7D2B\u5E95\u8272\uFF0C\u9002\u5408\u54C1\u724C\u5C55\u793A",
     style: {
-      fgColor: "#e1bee7",
-      bgColor: "#1a1a2e",
+      fgColor: "#6a1b9a",
+      bgColor: "#faf5ff",
       dotType: "rounded",
       cornerSquareType: "extra-rounded",
       cornerDotType: "dot",
       fgGradient: {
-        type: "radial",
+        type: "linear",
+        rotation: 0.785,
         colorStops: [
-          { offset: 0, color: "#ce93d8" },
-          { offset: 1, color: "#7b1fa2" }
+          { offset: 0, color: "#6a1b9a" },
+          { offset: 1, color: "#ab47bc" }
         ]
       }
     }
@@ -1254,7 +1255,9 @@ var DEFAULT_FORM = {
   useGradient: false,
   fgGradient: null,
   ecc: DEFAULT_ECC,
-  logoDataUrl: ""
+  logoDataUrl: "",
+  cornerColor: "#111111",
+  useCustomCornerColor: false
 };
 var DOT_TYPES = [
   { value: "rounded", label: "\u5706\u89D2\u5757" },
@@ -1263,6 +1266,65 @@ var DOT_TYPES = [
   { value: "square", label: "\u65B9\u5757" },
   { value: "extra-rounded", label: "\u8D85\u5706\u89D2" }
 ];
+var CORNER_SQUARE_TYPES = [
+  { value: "square", label: "\u65B9\u5757" },
+  { value: "extra-rounded", label: "\u8D85\u5706\u89D2" },
+  { value: "rounded", label: "\u5706\u89D2" },
+  { value: "dot", label: "\u5706\u70B9" }
+];
+var CORNER_DOT_TYPES = [
+  { value: "square", label: "\u65B9\u5757" },
+  { value: "dot", label: "\u5706\u70B9" },
+  { value: "rounded", label: "\u5706\u89D2" }
+];
+
+// src/color-utils.ts
+function hexToRgb(hex) {
+  const raw = hex.replace("#", "");
+  const full = raw.length === 3 ? raw.split("").map((c) => c + c).join("") : raw;
+  const num = Number.parseInt(full, 16);
+  return {
+    r: num >> 16 & 255,
+    g: num >> 8 & 255,
+    b: num & 255
+  };
+}
+function rgbToHex(r, g, b) {
+  const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)));
+  return `#${[clamp(r), clamp(g), clamp(b)].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+}
+function lightenColor(hex, amount) {
+  const { r, g, b } = hexToRgb(hex);
+  return rgbToHex(r + (255 - r) * amount, g + (255 - g) * amount, b + (255 - b) * amount);
+}
+function shiftColor(color, fromBase, toBase) {
+  const c = hexToRgb(color);
+  const from = hexToRgb(fromBase);
+  const to = hexToRgb(toBase);
+  return rgbToHex(c.r + (to.r - from.r), c.g + (to.g - from.g), c.b + (to.b - from.b));
+}
+function gradientFromColor(color, type = "linear", rotation = 0.785) {
+  return {
+    type,
+    rotation: type === "linear" ? rotation : void 0,
+    colorStops: [
+      { offset: 0, color },
+      { offset: 1, color: lightenColor(color, 0.38) }
+    ]
+  };
+}
+function remapGradient(gradient, newBaseColor) {
+  const stops = gradient.colorStops;
+  if (!stops.length) return gradientFromColor(newBaseColor, gradient.type, gradient.rotation);
+  const oldBase = stops[0].color;
+  return {
+    ...gradient,
+    colorStops: stops.map((stop, index) => ({
+      offset: stop.offset,
+      color: index === 0 ? newBaseColor : shiftColor(stop.color, oldBase, newBaseColor)
+    }))
+  };
+}
 
 // src/download.ts
 async function downloadQr(qrInstance, extension, baseName) {
@@ -1279,27 +1341,42 @@ async function copyQrToClipboard(qrInstance) {
 
 // src/generator.ts
 var import_qr_code_styling = __toESM(require_qr_code_styling());
+function fillColorOptions(color, gradient, useGradient, remapTo) {
+  if (useGradient && gradient) {
+    return { gradient: remapTo ? remapGradient(gradient, remapTo) : gradient };
+  }
+  return { color };
+}
+function dotsColorOptions(cfg) {
+  return fillColorOptions(cfg.fgColor, cfg.fgGradient, cfg.useGradient);
+}
+function cornerColorOptions(cfg) {
+  if (!cfg.useCustomCornerColor) return dotsColorOptions(cfg);
+  return fillColorOptions(cfg.cornerColor, cfg.fgGradient, cfg.useGradient, cfg.cornerColor);
+}
 function formToStyleConfig(form) {
-  const preset = STYLE_PRESETS[form.presetId ?? "mono"] ?? STYLE_PRESETS.mono;
   return {
     text: String(form.text ?? "").trim(),
     label: String(form.label ?? "").trim(),
-    presetId: form.presetId || preset.id,
+    presetId: form.presetId || "mono",
     size: Number(form.size) || 320,
     margin: Number(form.margin) ?? 12,
-    dotType: form.dotType || preset.style.dotType || "rounded",
-    cornerSquareType: form.cornerSquareType || preset.style.cornerSquareType || "extra-rounded",
-    cornerDotType: form.cornerDotType || preset.style.cornerDotType || "dot",
-    fgColor: form.fgColor || preset.style.fgColor || "#333",
-    bgColor: form.bgColor || preset.style.bgColor || "#fff",
-    useGradient: !!form.useGradient && !!preset.style.fgGradient,
-    fgGradient: preset.style.fgGradient ?? null,
+    dotType: form.dotType || "square",
+    cornerSquareType: form.cornerSquareType || "square",
+    cornerDotType: form.cornerDotType || "square",
+    fgColor: form.fgColor || "#111111",
+    bgColor: form.bgColor || "#ffffff",
+    useGradient: !!form.useGradient,
+    fgGradient: form.useGradient ? form.fgGradient ?? null : null,
     ecc: form.ecc || DEFAULT_ECC,
-    logoDataUrl: form.logoDataUrl || ""
+    logoDataUrl: form.logoDataUrl || "",
+    cornerColor: form.cornerColor || form.fgColor || "#111111",
+    useCustomCornerColor: !!form.useCustomCornerColor
   };
 }
 function styleConfigToQrOptions(cfg) {
-  const dotsColor = cfg.useGradient && cfg.fgGradient ? { gradient: cfg.fgGradient } : { color: cfg.fgColor };
+  const dotsColor = dotsColorOptions(cfg);
+  const cornerColor = cornerColorOptions(cfg);
   const options = {
     width: cfg.size,
     height: cfg.size,
@@ -1313,11 +1390,11 @@ function styleConfigToQrOptions(cfg) {
     },
     cornersSquareOptions: {
       type: cfg.cornerSquareType,
-      ...dotsColor
+      ...cornerColor
     },
     cornersDotOptions: {
       type: cfg.cornerDotType,
-      ...dotsColor
+      ...cornerColor
     },
     backgroundOptions: {
       color: cfg.bgColor
@@ -1343,16 +1420,18 @@ function createQrInstance(container, styleConfig) {
 function applyPresetToForm(form, presetId) {
   const preset = STYLE_PRESETS[presetId];
   if (!preset) return form;
+  const hasGradient = !!preset.style.fgGradient;
+  const gradientBase = preset.style.fgGradient?.colorStops[0]?.color;
   return {
     ...form,
     presetId,
     dotType: preset.style.dotType ?? form.dotType,
     cornerSquareType: preset.style.cornerSquareType ?? form.cornerSquareType,
     cornerDotType: preset.style.cornerDotType ?? form.cornerDotType,
-    fgColor: preset.style.fgColor ?? form.fgColor,
+    fgColor: hasGradient ? gradientBase ?? preset.style.fgColor ?? form.fgColor : preset.style.fgColor ?? form.fgColor,
     bgColor: preset.style.bgColor ?? form.bgColor,
-    useGradient: !!preset.style.fgGradient,
-    fgGradient: preset.style.fgGradient ?? null
+    useGradient: hasGradient,
+    fgGradient: hasGradient ? preset.style.fgGradient ?? null : null
   };
 }
 
@@ -1371,7 +1450,8 @@ var messages = {
       ocean: { name: "\u6D77\u6D0B\u84DD", desc: "\u6E05\u723D\u6E10\u53D8\uFF0C\u9002\u5408\u94FE\u63A5\u4E0E\u6587\u6863" },
       forest: { name: "\u68EE\u6797\u7EFF", desc: "\u6C89\u7A33\u914D\u8272\uFF0C\u9002\u5408\u5185\u90E8\u5DE5\u5177" },
       mono: { name: "\u6781\u7B80\u9ED1\u767D", desc: "\u9AD8\u5BF9\u6BD4\u6253\u5370\u53CB\u597D" },
-      night: { name: "\u6697\u591C\u7D2B", desc: "\u6DF1\u8272\u80CC\u666F\u5C55\u793A\u9875" }
+      violet: { name: "\u6DE1\u96C5\u7D2B", desc: "\u6D45\u7D2B\u5E95\u8272\uFF0C\u9002\u5408\u54C1\u724C\u5C55\u793A" },
+      night: { name: "\u6DE1\u96C5\u7D2B", desc: "\u6D45\u7D2B\u5E95\u8272\uFF0C\u9002\u5408\u54C1\u724C\u5C55\u793A" }
     },
     dotTypes: {
       rounded: "\u5706\u89D2\u5757",
@@ -1379,6 +1459,17 @@ var messages = {
       "classy-rounded": "\u7ECF\u5178\u5706\u89D2",
       square: "\u65B9\u5757",
       "extra-rounded": "\u8D85\u5706\u89D2"
+    },
+    cornerSquareTypes: {
+      square: "\u65B9\u5757",
+      "extra-rounded": "\u8D85\u5706\u89D2",
+      rounded: "\u5706\u89D2",
+      dot: "\u5706\u70B9"
+    },
+    cornerDotTypes: {
+      square: "\u65B9\u5757",
+      dot: "\u5706\u70B9",
+      rounded: "\u5706\u89D2"
     },
     toast: {
       restored: "\u5DF2\u8F7D\u5165\u5386\u53F2\u8BB0\u5F55\uFF0C\u53EF\u7EE7\u7EED\u7F16\u8F91",
@@ -1392,7 +1483,8 @@ var messages = {
       svgDownloaded: "SVG \u5DF2\u5F00\u59CB\u4E0B\u8F7D",
       copied: "\u5DF2\u590D\u5236 PNG \u5230\u526A\u8D34\u677F",
       copyFailed: "\u590D\u5236\u5931\u8D25",
-      cleared: "\u5386\u53F2\u5DF2\u6E05\u7A7A"
+      cleared: "\u5386\u53F2\u5DF2\u6E05\u7A7A",
+      logoLoadFailed: "\u56FE\u6807\u52A0\u8F7D\u5931\u8D25"
     },
     history: {
       custom: "\u81EA\u5B9A\u4E49",
@@ -1404,7 +1496,44 @@ var messages = {
     form: {
       pickFile: "\u9009\u62E9\u6587\u4EF6",
       noFileSelected: "\u672A\u9009\u62E9\u6587\u4EF6",
-      imageLoaded: "\u5DF2\u9009\u62E9\u56FE\u7247"
+      imageLoaded: "\u5DF2\u9009\u62E9\u56FE\u7247",
+      logoPresets: "\u9884\u8BBE\u56FE\u6807\uFF08\u70B9\u51FB\u9009\u7528\uFF09"
+    },
+    logoCategories: {
+      contact: "\u8054\u7CFB",
+      network: "\u94FE\u63A5",
+      social: "\u793E\u4EA4",
+      business: "\u5546\u4E1A"
+    },
+    logoLabels: {
+      phone: "\u7535\u8BDD",
+      email: "\u90AE\u4EF6",
+      sms: "\u77ED\u4FE1",
+      contact: "\u540D\u7247",
+      wifi: "WiFi",
+      link: "\u7F51\u5740",
+      location: "\u4F4D\u7F6E",
+      app: "App",
+      wechat: "\u5FAE\u4FE1",
+      qq: "QQ",
+      weibo: "\u5FAE\u535A",
+      douyin: "\u6296\u97F3",
+      xiaohongshu: "\u5C0F\u7EA2\u4E66",
+      bilibili: "\u54D4\u54E9\u54D4\u54E9",
+      instagram: "Instagram",
+      facebook: "Facebook",
+      x: "X",
+      youtube: "YouTube",
+      tiktok: "TikTok",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      linkedin: "LinkedIn",
+      shop: "\u5E97\u94FA",
+      calendar: "\u6D3B\u52A8",
+      document: "\u6587\u4EF6",
+      payment: "\u652F\u4ED8",
+      alipay: "\u652F\u4ED8\u5B9D",
+      wechatpay: "\u5FAE\u4FE1\u652F\u4ED8"
     }
   },
   en: {
@@ -1413,7 +1542,8 @@ var messages = {
       ocean: { name: "Ocean Blue", desc: "Fresh gradient for links and docs" },
       forest: { name: "Forest Green", desc: "Calm palette for internal tools" },
       mono: { name: "Minimal B&W", desc: "High contrast, print-friendly" },
-      night: { name: "Night Purple", desc: "Dark background showcase style" }
+      violet: { name: "Soft Violet", desc: "Light purple background for branding" },
+      night: { name: "Soft Violet", desc: "Light purple background for branding" }
     },
     dotTypes: {
       rounded: "Rounded",
@@ -1421,6 +1551,17 @@ var messages = {
       "classy-rounded": "Classy rounded",
       square: "Square",
       "extra-rounded": "Extra rounded"
+    },
+    cornerSquareTypes: {
+      square: "Square",
+      "extra-rounded": "Extra rounded",
+      rounded: "Rounded",
+      dot: "Dot"
+    },
+    cornerDotTypes: {
+      square: "Square",
+      dot: "Dot",
+      rounded: "Rounded"
     },
     toast: {
       restored: "History loaded \u2014 you can keep editing",
@@ -1434,7 +1575,8 @@ var messages = {
       svgDownloaded: "SVG download started",
       copied: "PNG copied to clipboard",
       copyFailed: "Copy failed",
-      cleared: "History cleared"
+      cleared: "History cleared",
+      logoLoadFailed: "Failed to load icon"
     },
     history: {
       custom: "Custom",
@@ -1446,7 +1588,44 @@ var messages = {
     form: {
       pickFile: "Choose file",
       noFileSelected: "No file chosen",
-      imageLoaded: "Image selected"
+      imageLoaded: "Image selected",
+      logoPresets: "Preset icons (click to use)"
+    },
+    logoCategories: {
+      contact: "Contact",
+      network: "Links",
+      social: "Social",
+      business: "Business"
+    },
+    logoLabels: {
+      phone: "Phone",
+      email: "Email",
+      sms: "SMS",
+      contact: "Contact card",
+      wifi: "WiFi",
+      link: "URL",
+      location: "Location",
+      app: "App",
+      wechat: "WeChat",
+      qq: "QQ",
+      weibo: "Weibo",
+      douyin: "Douyin",
+      xiaohongshu: "RED",
+      bilibili: "Bilibili",
+      instagram: "Instagram",
+      facebook: "Facebook",
+      x: "X",
+      youtube: "YouTube",
+      tiktok: "TikTok",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      linkedin: "LinkedIn",
+      shop: "Shop",
+      calendar: "Event",
+      document: "Document",
+      payment: "Payment",
+      alipay: "Alipay",
+      wechatpay: "WeChat Pay"
     }
   },
   ja: {
@@ -1455,7 +1634,8 @@ var messages = {
       ocean: { name: "\u30AA\u30FC\u30B7\u30E3\u30F3\u30D6\u30EB\u30FC", desc: "\u30EA\u30F3\u30AF\u30FB\u8CC7\u6599\u5411\u3051\u306E\u723D\u3084\u304B\u306A\u914D\u8272" },
       forest: { name: "\u30D5\u30A9\u30EC\u30B9\u30C8\u30B0\u30EA\u30FC\u30F3", desc: "\u843D\u3061\u7740\u3044\u305F\u5185\u90E8\u30C4\u30FC\u30EB\u5411\u3051" },
       mono: { name: "\u30DF\u30CB\u30DE\u30EB\u767D\u9ED2", desc: "\u5370\u5237\u5411\u3051\u9AD8\u30B3\u30F3\u30C8\u30E9\u30B9\u30C8" },
-      night: { name: "\u30CA\u30A4\u30C8\u30D1\u30FC\u30D7\u30EB", desc: "\u30C0\u30FC\u30AF\u80CC\u666F\u5411\u3051\u30B9\u30BF\u30A4\u30EB" }
+      violet: { name: "\u30BD\u30D5\u30C8\u30D1\u30FC\u30D7\u30EB", desc: "\u6DE1\u3044\u7D2B\u80CC\u666F\u306E\u30D6\u30E9\u30F3\u30C9\u5411\u3051" },
+      night: { name: "\u30BD\u30D5\u30C8\u30D1\u30FC\u30D7\u30EB", desc: "\u6DE1\u3044\u7D2B\u80CC\u666F\u306E\u30D6\u30E9\u30F3\u30C9\u5411\u3051" }
     },
     dotTypes: {
       rounded: "\u89D2\u4E38",
@@ -1463,6 +1643,17 @@ var messages = {
       "classy-rounded": "\u30AF\u30E9\u30B7\u30C3\u30AF\u89D2\u4E38",
       square: "\u30B9\u30AF\u30A8\u30A2",
       "extra-rounded": "\u8D85\u89D2\u4E38"
+    },
+    cornerSquareTypes: {
+      square: "\u30B9\u30AF\u30A8\u30A2",
+      "extra-rounded": "\u8D85\u89D2\u4E38",
+      rounded: "\u89D2\u4E38",
+      dot: "\u30C9\u30C3\u30C8"
+    },
+    cornerDotTypes: {
+      square: "\u30B9\u30AF\u30A8\u30A2",
+      dot: "\u30C9\u30C3\u30C8",
+      rounded: "\u89D2\u4E38"
     },
     toast: {
       restored: "\u5C65\u6B74\u3092\u8AAD\u307F\u8FBC\u307F\u307E\u3057\u305F\u3002\u7DE8\u96C6\u3092\u7D9A\u3051\u3089\u308C\u307E\u3059",
@@ -1476,7 +1667,8 @@ var messages = {
       svgDownloaded: "SVG\u306E\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u3092\u958B\u59CB\u3057\u307E\u3057\u305F",
       copied: "PNG\u3092\u30AF\u30EA\u30C3\u30D7\u30DC\u30FC\u30C9\u306B\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F",
       copyFailed: "\u30B3\u30D4\u30FC\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
-      cleared: "\u5C65\u6B74\u3092\u6D88\u53BB\u3057\u307E\u3057\u305F"
+      cleared: "\u5C65\u6B74\u3092\u6D88\u53BB\u3057\u307E\u3057\u305F",
+      logoLoadFailed: "\u30A2\u30A4\u30B3\u30F3\u306E\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F"
     },
     history: {
       custom: "\u30AB\u30B9\u30BF\u30E0",
@@ -1488,7 +1680,44 @@ var messages = {
     form: {
       pickFile: "\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E",
       noFileSelected: "\u30D5\u30A1\u30A4\u30EB\u672A\u9078\u629E",
-      imageLoaded: "\u753B\u50CF\u3092\u9078\u629E\u6E08\u307F"
+      imageLoaded: "\u753B\u50CF\u3092\u9078\u629E\u6E08\u307F",
+      logoPresets: "\u30D7\u30EA\u30BB\u30C3\u30C8\u30A2\u30A4\u30B3\u30F3\uFF08\u30AF\u30EA\u30C3\u30AF\u3067\u9078\u629E\uFF09"
+    },
+    logoCategories: {
+      contact: "\u9023\u7D61",
+      network: "\u30EA\u30F3\u30AF",
+      social: "SNS",
+      business: "\u30D3\u30B8\u30CD\u30B9"
+    },
+    logoLabels: {
+      phone: "\u96FB\u8A71",
+      email: "\u30E1\u30FC\u30EB",
+      sms: "SMS",
+      contact: "\u540D\u523A",
+      wifi: "WiFi",
+      link: "URL",
+      location: "\u4F4D\u7F6E",
+      app: "\u30A2\u30D7\u30EA",
+      wechat: "WeChat",
+      qq: "QQ",
+      weibo: "Weibo",
+      douyin: "Douyin",
+      xiaohongshu: "RED",
+      bilibili: "Bilibili",
+      instagram: "Instagram",
+      facebook: "Facebook",
+      x: "X",
+      youtube: "YouTube",
+      tiktok: "TikTok",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      linkedin: "LinkedIn",
+      shop: "\u5E97\u8217",
+      calendar: "\u30A4\u30D9\u30F3\u30C8",
+      document: "\u30D5\u30A1\u30A4\u30EB",
+      payment: "\u6C7A\u6E08",
+      alipay: "Alipay",
+      wechatpay: "WeChat Pay"
     }
   },
   ko: {
@@ -1497,7 +1726,8 @@ var messages = {
       ocean: { name: "\uC624\uC158 \uBE14\uB8E8", desc: "\uB9C1\uD06C\xB7\uBB38\uC11C\uC6A9 \uC2DC\uC6D0\uD55C \uC0C9\uC0C1" },
       forest: { name: "\uD3EC\uB808\uC2A4\uD2B8 \uADF8\uB9B0", desc: "\uB0B4\uBD80 \uB3C4\uAD6C\uC6A9 \uCC28\uBD84\uD55C \uC0C9\uC0C1" },
       mono: { name: "\uBBF8\uB2C8\uBA40 \uD751\uBC31", desc: "\uC778\uC1C4\uC6A9 \uACE0\uB300\uBE44" },
-      night: { name: "\uB098\uC774\uD2B8 \uD37C\uD50C", desc: "\uB2E4\uD06C \uBC30\uACBD \uC2A4\uD0C0\uC77C" }
+      violet: { name: "\uC18C\uD504\uD2B8 \uBC14\uC774\uC62C\uB81B", desc: "\uC5F0\uD55C \uBCF4\uB77C \uBC30\uACBD \uBE0C\uB79C\uB529\uC6A9" },
+      night: { name: "\uC18C\uD504\uD2B8 \uBC14\uC774\uC62C\uB81B", desc: "\uC5F0\uD55C \uBCF4\uB77C \uBC30\uACBD \uBE0C\uB79C\uB529\uC6A9" }
     },
     dotTypes: {
       rounded: "\uB465\uADFC \uBAA8\uC11C\uB9AC",
@@ -1505,6 +1735,17 @@ var messages = {
       "classy-rounded": "\uD074\uB798\uC2DD \uB465\uADFC",
       square: "\uC0AC\uAC01\uD615",
       "extra-rounded": "\uCD08\uB465\uADFC"
+    },
+    cornerSquareTypes: {
+      square: "\uC0AC\uAC01\uD615",
+      "extra-rounded": "\uCD08\uB465\uADFC",
+      rounded: "\uB465\uADFC",
+      dot: "\uC810"
+    },
+    cornerDotTypes: {
+      square: "\uC0AC\uAC01\uD615",
+      dot: "\uC810",
+      rounded: "\uB465\uADFC"
     },
     toast: {
       restored: "\uAE30\uB85D\uC744 \uBD88\uB7EC\uC654\uC2B5\uB2C8\uB2E4. \uACC4\uC18D \uD3B8\uC9D1\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4",
@@ -1518,7 +1759,8 @@ var messages = {
       svgDownloaded: "SVG \uB2E4\uC6B4\uB85C\uB4DC\uB97C \uC2DC\uC791\uD588\uC2B5\uB2C8\uB2E4",
       copied: "PNG\uB97C \uD074\uB9BD\uBCF4\uB4DC\uC5D0 \uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4",
       copyFailed: "\uBCF5\uC0AC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4",
-      cleared: "\uAE30\uB85D\uC744 \uC0AD\uC81C\uD588\uC2B5\uB2C8\uB2E4"
+      cleared: "\uAE30\uB85D\uC744 \uC0AD\uC81C\uD588\uC2B5\uB2C8\uB2E4",
+      logoLoadFailed: "\uC544\uC774\uCF58\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4"
     },
     history: {
       custom: "\uC0AC\uC6A9\uC790 \uC9C0\uC815",
@@ -1530,7 +1772,44 @@ var messages = {
     form: {
       pickFile: "\uD30C\uC77C \uC120\uD0DD",
       noFileSelected: "\uC120\uD0DD\uB41C \uD30C\uC77C \uC5C6\uC74C",
-      imageLoaded: "\uC774\uBBF8\uC9C0 \uC120\uD0DD\uB428"
+      imageLoaded: "\uC774\uBBF8\uC9C0 \uC120\uD0DD\uB428",
+      logoPresets: "\uD504\uB9AC\uC14B \uC544\uC774\uCF58 (\uD074\uB9AD\uD558\uC5EC \uC120\uD0DD)"
+    },
+    logoCategories: {
+      contact: "\uC5F0\uB77D",
+      network: "\uB9C1\uD06C",
+      social: "SNS",
+      business: "\uBE44\uC988\uB2C8\uC2A4"
+    },
+    logoLabels: {
+      phone: "\uC804\uD654",
+      email: "\uC774\uBA54\uC77C",
+      sms: "\uBB38\uC790",
+      contact: "\uBA85\uD568",
+      wifi: "WiFi",
+      link: "URL",
+      location: "\uC704\uCE58",
+      app: "\uC571",
+      wechat: "WeChat",
+      qq: "QQ",
+      weibo: "Weibo",
+      douyin: "Douyin",
+      xiaohongshu: "RED",
+      bilibili: "Bilibili",
+      instagram: "Instagram",
+      facebook: "Facebook",
+      x: "X",
+      youtube: "YouTube",
+      tiktok: "TikTok",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      linkedin: "LinkedIn",
+      shop: "\uB9E4\uC7A5",
+      calendar: "\uC774\uBCA4\uD2B8",
+      document: "\uBB38\uC11C",
+      payment: "\uACB0\uC81C",
+      alipay: "Alipay",
+      wechatpay: "WeChat Pay"
     }
   },
   zhTW: {
@@ -1539,7 +1818,8 @@ var messages = {
       ocean: { name: "\u6D77\u6D0B\u85CD", desc: "\u6E05\u723D\u6F38\u5C64\uFF0C\u9069\u5408\u9023\u7D50\u8207\u6587\u4EF6" },
       forest: { name: "\u68EE\u6797\u7DA0", desc: "\u6C89\u7A69\u914D\u8272\uFF0C\u9069\u5408\u5167\u90E8\u5DE5\u5177" },
       mono: { name: "\u6975\u7C21\u9ED1\u767D", desc: "\u9AD8\u5C0D\u6BD4\u5370\u5237\u53CB\u5584" },
-      night: { name: "\u6697\u591C\u7D2B", desc: "\u6DF1\u8272\u80CC\u666F\u5C55\u793A\u9801" }
+      violet: { name: "\u6DE1\u96C5\u7D2B", desc: "\u6DFA\u7D2B\u5E95\u8272\uFF0C\u9069\u5408\u54C1\u724C\u5C55\u793A" },
+      night: { name: "\u6DE1\u96C5\u7D2B", desc: "\u6DFA\u7D2B\u5E95\u8272\uFF0C\u9069\u5408\u54C1\u724C\u5C55\u793A" }
     },
     dotTypes: {
       rounded: "\u5713\u89D2\u584A",
@@ -1547,6 +1827,17 @@ var messages = {
       "classy-rounded": "\u7D93\u5178\u5713\u89D2",
       square: "\u65B9\u584A",
       "extra-rounded": "\u8D85\u5713\u89D2"
+    },
+    cornerSquareTypes: {
+      square: "\u65B9\u584A",
+      "extra-rounded": "\u8D85\u5713\u89D2",
+      rounded: "\u5713\u89D2",
+      dot: "\u5713\u9EDE"
+    },
+    cornerDotTypes: {
+      square: "\u65B9\u584A",
+      dot: "\u5713\u9EDE",
+      rounded: "\u5713\u89D2"
     },
     toast: {
       restored: "\u5DF2\u8F09\u5165\u6B77\u53F2\u8A18\u9304\uFF0C\u53EF\u7E7C\u7E8C\u7DE8\u8F2F",
@@ -1560,7 +1851,8 @@ var messages = {
       svgDownloaded: "SVG \u5DF2\u958B\u59CB\u4E0B\u8F09",
       copied: "\u5DF2\u8907\u88FD PNG \u5230\u526A\u8CBC\u7C3F",
       copyFailed: "\u8907\u88FD\u5931\u6557",
-      cleared: "\u6B77\u53F2\u5DF2\u6E05\u7A7A"
+      cleared: "\u6B77\u53F2\u5DF2\u6E05\u7A7A",
+      logoLoadFailed: "\u5716\u793A\u8F09\u5165\u5931\u6557"
     },
     history: {
       custom: "\u81EA\u8A02",
@@ -1572,7 +1864,44 @@ var messages = {
     form: {
       pickFile: "\u9078\u64C7\u6A94\u6848",
       noFileSelected: "\u672A\u9078\u64C7\u6A94\u6848",
-      imageLoaded: "\u5DF2\u9078\u64C7\u5716\u7247"
+      imageLoaded: "\u5DF2\u9078\u64C7\u5716\u7247",
+      logoPresets: "\u9810\u8A2D\u5716\u793A\uFF08\u9EDE\u64CA\u9078\u7528\uFF09"
+    },
+    logoCategories: {
+      contact: "\u806F\u7D61",
+      network: "\u9023\u7D50",
+      social: "\u793E\u7FA4",
+      business: "\u5546\u696D"
+    },
+    logoLabels: {
+      phone: "\u96FB\u8A71",
+      email: "\u90F5\u4EF6",
+      sms: "\u7C21\u8A0A",
+      contact: "\u540D\u7247",
+      wifi: "WiFi",
+      link: "\u7DB2\u5740",
+      location: "\u4F4D\u7F6E",
+      app: "App",
+      wechat: "\u5FAE\u4FE1",
+      qq: "QQ",
+      weibo: "\u5FAE\u535A",
+      douyin: "\u6296\u97F3",
+      xiaohongshu: "\u5C0F\u7D05\u66F8",
+      bilibili: "\u55F6\u54E9\u55F6\u54E9",
+      instagram: "Instagram",
+      facebook: "Facebook",
+      x: "X",
+      youtube: "YouTube",
+      tiktok: "TikTok",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      linkedin: "LinkedIn",
+      shop: "\u5E97\u92EA",
+      calendar: "\u6D3B\u52D5",
+      document: "\u6A94\u6848",
+      payment: "\u652F\u4ED8",
+      alipay: "\u652F\u4ED8\u5BF6",
+      wechatpay: "\u5FAE\u4FE1\u652F\u4ED8"
     }
   }
 };
@@ -1617,6 +1946,14 @@ function dotTypeLabel(value, locale2 = getLocale()) {
   const dots = messages[locale2].dotTypes;
   return dots[value] ?? value;
 }
+function cornerSquareTypeLabel(value, locale2 = getLocale()) {
+  const types = messages[locale2].cornerSquareTypes;
+  return types[value] ?? value;
+}
+function cornerDotTypeLabel(value, locale2 = getLocale()) {
+  const types = messages[locale2].cornerDotTypes;
+  return types[value] ?? value;
+}
 function msg(key, locale2 = getLocale()) {
   return messages[locale2].toast[key];
 }
@@ -1625,6 +1962,14 @@ function hist(key, locale2 = getLocale()) {
 }
 function formUi(key, locale2 = getLocale()) {
   return messages[locale2].form[key];
+}
+function logoCategoryLabel(id, locale2 = getLocale()) {
+  const cats = messages[locale2].logoCategories;
+  return cats[id] ?? id;
+}
+function logoPresetLabel(id, locale2 = getLocale()) {
+  const logos = messages[locale2].logoLabels;
+  return logos[id] ?? id;
 }
 function bcp47Locale(locale2) {
   const map = {
@@ -1635,6 +1980,45 @@ function bcp47Locale(locale2) {
     zhTW: "zh-TW"
   };
   return map[locale2];
+}
+
+// src/logo-presets.ts
+var LOGO_CATEGORY_ORDER = ["contact", "network", "social", "business"];
+var LOGO_PRESETS = [
+  { id: "phone", file: "phone.svg", category: "contact" },
+  { id: "email", file: "email.svg", category: "contact" },
+  { id: "sms", file: "sms.svg", category: "contact" },
+  { id: "contact", file: "contact.svg", category: "contact" },
+  { id: "wifi", file: "wifi.svg", category: "network" },
+  { id: "link", file: "link.svg", category: "network" },
+  { id: "location", file: "location.svg", category: "network" },
+  { id: "app", file: "app.svg", category: "network" },
+  { id: "wechat", file: "wechat.svg", category: "social" },
+  { id: "qq", file: "qq.svg", category: "social" },
+  { id: "weibo", file: "weibo.svg", category: "social" },
+  { id: "douyin", file: "douyin.svg", category: "social" },
+  { id: "xiaohongshu", file: "xiaohongshu.svg", category: "social" },
+  { id: "bilibili", file: "bilibili.svg", category: "social" },
+  { id: "instagram", file: "instagram.svg", category: "social" },
+  { id: "facebook", file: "facebook.svg", category: "social" },
+  { id: "x", file: "x.svg", category: "social" },
+  { id: "youtube", file: "youtube.svg", category: "social" },
+  { id: "tiktok", file: "tiktok.svg", category: "social" },
+  { id: "whatsapp", file: "whatsapp.svg", category: "social" },
+  { id: "telegram", file: "telegram.svg", category: "social" },
+  { id: "linkedin", file: "linkedin.svg", category: "social" },
+  { id: "shop", file: "shop.svg", category: "business" },
+  { id: "calendar", file: "calendar.svg", category: "business" },
+  { id: "document", file: "document.svg", category: "business" },
+  { id: "payment", file: "payment.svg", category: "business" },
+  { id: "alipay", file: "alipay.svg", category: "business" },
+  { id: "wechatpay", file: "wechatpay.svg", category: "business" }
+];
+function logoPresetAssetUrl(file) {
+  return `${window.location.origin}/assets/logos/${file}`;
+}
+function presetsByCategory(category) {
+  return LOGO_PRESETS.filter((p) => p.category === category);
 }
 
 // src/utils.ts
@@ -1668,6 +2052,13 @@ function debounce(fn, ms = 280) {
     clearTimeout(timer);
     timer = setTimeout(() => fn(...args), ms);
   });
+}
+async function urlToDataUrl(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const blob = await res.blob();
+  const type = blob.type || "image/svg+xml";
+  return fileToDataUrl(new File([blob], "logo", { type }));
 }
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
@@ -1826,13 +2217,21 @@ var els = {
   sizeVal: queryRequired("field-size-val"),
   margin: queryRequired("field-margin"),
   dotType: queryRequired("field-dot-type"),
+  cornerSquareType: queryRequired("field-corner-square-type"),
+  cornerDotType: queryRequired("field-corner-dot-type"),
   fgColor: queryRequired("field-fg-color"),
   bgColor: queryRequired("field-bg-color"),
   useGradient: queryRequired("field-use-gradient"),
+  cornerColor: queryRequired("field-corner-color"),
+  cornerColorCustom: queryRequired("corner-color-custom"),
+  cornerColorFollow: queryRequired("corner-color-follow"),
+  useCustomCornerColor: queryRequired("field-use-custom-corner-color"),
   logo: queryRequired("field-logo"),
   pickLogo: queryRequired("btn-pick-logo"),
   logoName: queryRequired("field-logo-name"),
   clearLogo: queryRequired("btn-clear-logo"),
+  logoCategoryTabs: queryRequired("logo-category-tabs"),
+  logoPresetGrid: queryRequired("logo-preset-grid"),
   preview: queryRequired("qr-preview"),
   presetGrid: queryRequired("preset-grid"),
   btnGenerate: queryRequired("btn-generate"),
@@ -1848,6 +2247,9 @@ var els = {
 var currentQr = null;
 var currentStyle = null;
 var logoDataUrl = "";
+var fgGradient = null;
+var selectedLogoPresetId = "";
+var activeLogoCategory = "contact";
 var toastTimer;
 var historyView = new HistoryView({
   store,
@@ -1869,22 +2271,29 @@ function showToast(text) {
   toastTimer = setTimeout(() => els.toast.classList.remove("is-visible"), 2400);
 }
 function readForm() {
-  const base = formToStyleConfig({});
   return {
-    ...base,
     text: els.text.value,
     label: els.label.value,
     presetId: els.preset.value,
     size: Number(els.size.value),
     margin: Number(els.margin.value),
     dotType: els.dotType.value,
-    cornerSquareType: "extra-rounded",
-    cornerDotType: "dot",
+    cornerSquareType: els.cornerSquareType.value,
+    cornerDotType: els.cornerDotType.value,
     fgColor: els.fgColor.value,
     bgColor: els.bgColor.value,
     useGradient: els.useGradient.checked,
-    logoDataUrl
+    fgGradient: els.useGradient.checked ? fgGradient : null,
+    ecc: DEFAULT_FORM.ecc,
+    logoDataUrl,
+    cornerColor: els.cornerColor.value,
+    useCustomCornerColor: els.useCustomCornerColor.checked
   };
+}
+function syncCornerColorUi() {
+  const custom = els.useCustomCornerColor.checked;
+  els.cornerColorCustom.hidden = !custom;
+  els.cornerColorFollow.hidden = custom;
 }
 function fillForm(style) {
   els.text.value = style.text ?? "";
@@ -1894,10 +2303,17 @@ function fillForm(style) {
   els.sizeVal.textContent = `${els.size.value}px`;
   els.margin.value = String(style.margin ?? 12);
   els.dotType.value = style.dotType ?? "square";
+  els.cornerSquareType.value = style.cornerSquareType ?? "square";
+  els.cornerDotType.value = style.cornerDotType ?? "square";
   els.fgColor.value = style.fgColor ?? "#111111";
   els.bgColor.value = style.bgColor ?? "#ffffff";
   els.useGradient.checked = !!style.useGradient;
+  fgGradient = style.fgGradient ?? null;
+  els.cornerColor.value = style.cornerColor ?? style.fgColor ?? "#111111";
+  els.useCustomCornerColor.checked = !!style.useCustomCornerColor;
   logoDataUrl = style.logoDataUrl ?? "";
+  selectedLogoPresetId = "";
+  syncCornerColorUi();
   updateLogoUi();
   syncPresetCards();
 }
@@ -1907,11 +2323,82 @@ function updateLogoUi() {
   const file = els.logo.files?.[0];
   if (file) {
     els.logoName.textContent = file.name;
+  } else if (selectedLogoPresetId) {
+    els.logoName.textContent = logoPresetLabel(selectedLogoPresetId, locale);
   } else if (logoDataUrl) {
     els.logoName.textContent = formUi("imageLoaded", locale);
   } else {
     els.logoName.textContent = formUi("noFileSelected", locale);
   }
+  syncLogoPresetCards();
+}
+function syncLogoPresetCards() {
+  els.logoPresetGrid.querySelectorAll(".logo-preset-btn").forEach((btn) => {
+    btn.classList.toggle(
+      "is-active",
+      btn.dataset.logo === selectedLogoPresetId && !!logoDataUrl
+    );
+  });
+}
+async function applyLogoPreset(id, file) {
+  try {
+    logoDataUrl = await urlToDataUrl(logoPresetAssetUrl(file));
+    selectedLogoPresetId = id;
+    els.logo.value = "";
+    updateLogoUi();
+    renderPreview();
+  } catch {
+    showToast(msg("logoLoadFailed"));
+  }
+}
+function syncLogoCategoryTabs() {
+  els.logoCategoryTabs.querySelectorAll(".logo-category-tab").forEach((tab) => {
+    const active = tab.dataset.category === activeLogoCategory;
+    tab.classList.toggle("is-active", active);
+    tab.setAttribute("aria-selected", active ? "true" : "false");
+  });
+}
+function renderLogoPresetGrid() {
+  els.logoPresetGrid.innerHTML = "";
+  for (const item of presetsByCategory(activeLogoCategory)) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "logo-preset-btn";
+    btn.dataset.logo = item.id;
+    btn.title = logoPresetLabel(item.id, locale);
+    btn.setAttribute("aria-label", logoPresetLabel(item.id, locale));
+    const img = document.createElement("img");
+    img.src = logoPresetAssetUrl(item.file);
+    img.alt = "";
+    img.width = 32;
+    img.height = 32;
+    img.loading = "lazy";
+    btn.appendChild(img);
+    btn.addEventListener("click", () => {
+      void applyLogoPreset(item.id, item.file);
+    });
+    els.logoPresetGrid.appendChild(btn);
+  }
+  syncLogoPresetCards();
+}
+function initLogoPresets() {
+  els.logoCategoryTabs.innerHTML = "";
+  for (const category of LOGO_CATEGORY_ORDER) {
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = "logo-category-tab";
+    tab.dataset.category = category;
+    tab.setAttribute("role", "tab");
+    tab.textContent = logoCategoryLabel(category, locale);
+    tab.addEventListener("click", () => {
+      activeLogoCategory = category;
+      syncLogoCategoryTabs();
+      renderLogoPresetGrid();
+    });
+    els.logoCategoryTabs.appendChild(tab);
+  }
+  syncLogoCategoryTabs();
+  renderLogoPresetGrid();
 }
 function syncPresetCards() {
   const id = els.preset.value;
@@ -1960,7 +2447,8 @@ function initPresetGrid() {
     btn.innerHTML = `<span class="preset-card-name">${presetLabel(preset.id, "name")}</span><span class="preset-card-desc">${presetLabel(preset.id, "desc")}</span>`;
     btn.addEventListener("click", () => {
       els.preset.value = preset.id;
-      fillForm(applyPresetToForm(readForm(), preset.id));
+      const next = applyPresetToForm(readForm(), preset.id);
+      fillForm(next);
       renderPreview();
     });
     els.presetGrid.appendChild(btn);
@@ -1968,12 +2456,26 @@ function initPresetGrid() {
 }
 function initSelects() {
   els.dotType.innerHTML = "";
+  els.cornerSquareType.innerHTML = "";
+  els.cornerDotType.innerHTML = "";
   els.preset.innerHTML = "";
   for (const d of DOT_TYPES) {
     const opt = document.createElement("option");
     opt.value = d.value;
     opt.textContent = dotTypeLabel(d.value);
     els.dotType.appendChild(opt);
+  }
+  for (const d of CORNER_SQUARE_TYPES) {
+    const opt = document.createElement("option");
+    opt.value = d.value;
+    opt.textContent = cornerSquareTypeLabel(d.value);
+    els.cornerSquareType.appendChild(opt);
+  }
+  for (const d of CORNER_DOT_TYPES) {
+    const opt = document.createElement("option");
+    opt.value = d.value;
+    opt.textContent = cornerDotTypeLabel(d.value);
+    els.cornerDotType.appendChild(opt);
   }
   for (const p of Object.values(STYLE_PRESETS)) {
     const opt = document.createElement("option");
@@ -1989,8 +2491,32 @@ function bindEvents() {
     els.sizeVal.textContent = `${els.size.value}px`;
   });
   els.preset.addEventListener("change", () => {
-    fillForm(applyPresetToForm(readForm(), els.preset.value));
+    const next = applyPresetToForm(readForm(), els.preset.value);
+    fillForm(next);
     renderPreview();
+  });
+  els.fgColor.addEventListener("input", () => {
+    if (els.useGradient.checked) {
+      fgGradient = fgGradient ? remapGradient(fgGradient, els.fgColor.value) : gradientFromColor(els.fgColor.value);
+    }
+    debouncedPreview();
+  });
+  els.bgColor.addEventListener("input", debouncedPreview);
+  els.useGradient.addEventListener("change", () => {
+    if (els.useGradient.checked) {
+      fgGradient = fgGradient ?? gradientFromColor(els.fgColor.value);
+    } else {
+      fgGradient = null;
+    }
+    debouncedPreview();
+  });
+  els.cornerColor.addEventListener("input", debouncedPreview);
+  els.useCustomCornerColor.addEventListener("change", () => {
+    if (els.useCustomCornerColor.checked) {
+      els.cornerColor.value = els.fgColor.value;
+    }
+    syncCornerColorUi();
+    debouncedPreview();
   });
   els.pickLogo.addEventListener("click", () => {
     els.logo.click();
@@ -2006,11 +2532,13 @@ function bindEvents() {
       showToast(msg("logoSize"));
     }
     logoDataUrl = await fileToDataUrl(file);
+    selectedLogoPresetId = "";
     updateLogoUi();
     renderPreview();
   });
   els.clearLogo.addEventListener("click", () => {
     logoDataUrl = "";
+    selectedLogoPresetId = "";
     els.logo.value = "";
     updateLogoUi();
     renderPreview();
@@ -2057,7 +2585,9 @@ function bindEvents() {
 function init() {
   initSelects();
   initPresetGrid();
+  initLogoPresets();
   fillForm(DEFAULT_FORM);
+  syncCornerColorUi();
   bindEvents();
   renderPreview();
   historyView.render();

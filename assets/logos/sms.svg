@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="sms">
+  <rect width="64" height="64" rx="14" fill="#007AFF"/>
+  <g transform="translate(14 14) scale(1.5)"><path d="M3 4h18c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8l-5 4V6c0-1.1.9-2 2-2zm4 7h8v2H7v-2zm0-4h12v2H7V7z" fill="#FFFFFF"/></g>
+</svg>

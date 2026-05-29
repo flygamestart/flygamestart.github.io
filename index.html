@@ -60,32 +60,77 @@
                                     <div id="preset-grid" class="preset-grid"></div>
                                     <select id="field-preset" hidden aria-hidden="true"></select>
                                 </div>
-                                <div class="field">
-                                    <label for="field-size">尺寸 <span id="field-size-val">320px</span></label>
-                                    <input type="range" id="field-size" min="200" max="800" step="10" value="320">
-                                </div>
-                                <div class="field">
-                                    <label for="field-margin">边距</label>
-                                    <input type="number" id="field-margin" min="0" max="80" value="12">
-                                </div>
-                                <div class="field">
-                                    <label for="field-dot-type">码点形状</label>
-                                    <select id="field-dot-type"></select>
-                                </div>
-                                <div class="field">
-                                    <label for="field-fg-color">前景色</label>
-                                    <input type="color" id="field-fg-color" value="#111111">
-                                    <div class="field-inline" style="margin-top:8px">
-                                        <input type="checkbox" id="field-use-gradient">
-                                        <label for="field-use-gradient" style="margin:0;font-weight:400">使用预设渐变</label>
+                                <div class="style-section span-2">
+                                    <div class="style-section-title">尺寸与边距</div>
+                                    <div class="style-section-grid">
+                                        <div class="field">
+                                            <label for="field-size">尺寸 <span id="field-size-val">320px</span></label>
+                                            <input type="range" id="field-size" min="200" max="800" step="10" value="320">
+                                        </div>
+                                        <div class="field">
+                                            <label for="field-margin">边距</label>
+                                            <input type="number" id="field-margin" min="0" max="80" value="12">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <label for="field-bg-color">背景色</label>
-                                    <input type="color" id="field-bg-color" value="#ffffff">
+                                <div class="style-section span-2">
+                                    <div class="style-section-title">形状</div>
+                                    <div class="style-section-grid cols-3">
+                                        <div class="field">
+                                            <label for="field-dot-type">码点形状</label>
+                                            <select id="field-dot-type"></select>
+                                        </div>
+                                        <div class="field">
+                                            <label for="field-corner-square-type">角标外框</label>
+                                            <select id="field-corner-square-type"></select>
+                                        </div>
+                                        <div class="field">
+                                            <label for="field-corner-dot-type">角标内点</label>
+                                            <select id="field-corner-dot-type"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="style-section span-2">
+                                    <div class="style-section-title">颜色</div>
+                                    <div class="color-fields">
+                                        <div class="color-field">
+                                            <label for="field-fg-color">前景色</label>
+                                            <div class="color-row">
+                                                <input type="color" id="field-fg-color" class="input-color" value="#111111">
+                                                <label class="field-toggle" for="field-use-gradient">
+                                                    <input type="checkbox" id="field-use-gradient">
+                                                    渐变色
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="color-field">
+                                            <label for="field-bg-color">背景色</label>
+                                            <div class="color-row">
+                                                <input type="color" id="field-bg-color" class="input-color" value="#ffffff">
+                                            </div>
+                                        </div>
+                                        <div class="color-field">
+                                            <label for="field-corner-color">角标颜色</label>
+                                            <div class="corner-color-block">
+                                                <label class="field-toggle" for="field-use-custom-corner-color">
+                                                    <input type="checkbox" id="field-use-custom-corner-color">
+                                                    单独设置
+                                                </label>
+                                                <div id="corner-color-custom" class="color-row" hidden>
+                                                    <input type="color" id="field-corner-color" class="input-color" value="#111111">
+                                                </div>
+                                                <p id="corner-color-follow" class="corner-follow-hint">跟随前景色</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="field span-2">
                                     <label for="field-logo">中心 Logo（可选）</label>
+                                    <p class="field-hint field-hint-tight">预设图标（点击选用）</p>
+                                    <div class="logo-preset-panel">
+                                        <div id="logo-category-tabs" class="logo-category-tabs" role="tablist"></div>
+                                        <div id="logo-preset-grid" class="logo-preset-grid" role="tabpanel"></div>
+                                    </div>
                                     <div class="file-upload">
                                         <input type="file" id="field-logo" class="file-upload-input"
                                             accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
