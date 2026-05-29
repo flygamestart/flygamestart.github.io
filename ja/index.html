@@ -80,7 +80,12 @@
                                 </div>
                                 <div class="field span-2">
                                     <label for="field-logo">中央ロゴ（任意）</label>
-                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <div class="file-upload">
+                                        <input type="file" id="field-logo" class="file-upload-input"
+                                            accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+                                        <button type="button" class="btn btn-ghost btn-sm" id="btn-pick-logo">ファイルを選択</button>
+                                        <span class="file-upload-name" id="field-logo-name">ファイル未選択</span>
+                                    </div>
                                     <p class="field-hint">正方形の透過PNG推奨、512KB未満</p>
                                     <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>ロゴを削除</button>
                                 </div>

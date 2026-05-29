@@ -1400,6 +1400,11 @@ var messages = {
       edit: "\u7F16\u8F91",
       delete: "\u5220\u9664",
       confirmClear: "\u786E\u5B9A\u6E05\u7A7A\u5168\u90E8\u5386\u53F2\u8BB0\u5F55\uFF1F"
+    },
+    form: {
+      pickFile: "\u9009\u62E9\u6587\u4EF6",
+      noFileSelected: "\u672A\u9009\u62E9\u6587\u4EF6",
+      imageLoaded: "\u5DF2\u9009\u62E9\u56FE\u7247"
     }
   },
   en: {
@@ -1437,6 +1442,11 @@ var messages = {
       edit: "Edit",
       delete: "Delete",
       confirmClear: "Clear all history?"
+    },
+    form: {
+      pickFile: "Choose file",
+      noFileSelected: "No file chosen",
+      imageLoaded: "Image selected"
     }
   },
   ja: {
@@ -1474,6 +1484,11 @@ var messages = {
       edit: "\u7DE8\u96C6",
       delete: "\u524A\u9664",
       confirmClear: "\u5C65\u6B74\u3092\u3059\u3079\u3066\u6D88\u53BB\u3057\u307E\u3059\u304B\uFF1F"
+    },
+    form: {
+      pickFile: "\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E",
+      noFileSelected: "\u30D5\u30A1\u30A4\u30EB\u672A\u9078\u629E",
+      imageLoaded: "\u753B\u50CF\u3092\u9078\u629E\u6E08\u307F"
     }
   },
   ko: {
@@ -1511,6 +1526,11 @@ var messages = {
       edit: "\uD3B8\uC9D1",
       delete: "\uC0AD\uC81C",
       confirmClear: "\uBAA8\uB4E0 \uAE30\uB85D\uC744 \uC0AD\uC81C\uD560\uAE4C\uC694?"
+    },
+    form: {
+      pickFile: "\uD30C\uC77C \uC120\uD0DD",
+      noFileSelected: "\uC120\uD0DD\uB41C \uD30C\uC77C \uC5C6\uC74C",
+      imageLoaded: "\uC774\uBBF8\uC9C0 \uC120\uD0DD\uB428"
     }
   },
   zhTW: {
@@ -1548,6 +1568,11 @@ var messages = {
       edit: "\u7DE8\u8F2F",
       delete: "\u522A\u9664",
       confirmClear: "\u78BA\u5B9A\u6E05\u7A7A\u5168\u90E8\u6B77\u53F2\u8A18\u9304\uFF1F"
+    },
+    form: {
+      pickFile: "\u9078\u64C7\u6A94\u6848",
+      noFileSelected: "\u672A\u9078\u64C7\u6A94\u6848",
+      imageLoaded: "\u5DF2\u9078\u64C7\u5716\u7247"
     }
   }
 };
@@ -1597,6 +1622,9 @@ function msg(key, locale2 = getLocale()) {
 }
 function hist(key, locale2 = getLocale()) {
   return messages[locale2].history[key];
+}
+function formUi(key, locale2 = getLocale()) {
+  return messages[locale2].form[key];
 }
 function bcp47Locale(locale2) {
   const map = {
@@ -1802,6 +1830,8 @@ var els = {
   bgColor: queryRequired("field-bg-color"),
   useGradient: queryRequired("field-use-gradient"),
   logo: queryRequired("field-logo"),
+  pickLogo: queryRequired("btn-pick-logo"),
+  logoName: queryRequired("field-logo-name"),
   clearLogo: queryRequired("btn-clear-logo"),
   preview: queryRequired("qr-preview"),
   presetGrid: queryRequired("preset-grid"),
@@ -1873,6 +1903,15 @@ function fillForm(style) {
 }
 function updateLogoUi() {
   els.clearLogo.hidden = !logoDataUrl;
+  els.pickLogo.textContent = formUi("pickFile", locale);
+  const file = els.logo.files?.[0];
+  if (file) {
+    els.logoName.textContent = file.name;
+  } else if (logoDataUrl) {
+    els.logoName.textContent = formUi("imageLoaded", locale);
+  } else {
+    els.logoName.textContent = formUi("noFileSelected", locale);
+  }
 }
 function syncPresetCards() {
   const id = els.preset.value;
@@ -1952,6 +1991,9 @@ function bindEvents() {
   els.preset.addEventListener("change", () => {
     fillForm(applyPresetToForm(readForm(), els.preset.value));
     renderPreview();
+  });
+  els.pickLogo.addEventListener("click", () => {
+    els.logo.click();
   });
   els.logo.addEventListener("change", async () => {
     const file = els.logo.files?.[0];

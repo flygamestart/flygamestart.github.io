@@ -195,6 +195,27 @@ body {
     color: var(--text-placeholder);
 }
 
+.file-upload {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-upload-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.file-upload-name {
+    font-size: 13px;
+    color: var(--text-secondary);
+    word-break: break-all;
+}
+
 .field-inline {
     display: flex;
     align-items: center;

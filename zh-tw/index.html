@@ -80,7 +80,12 @@
                                 </div>
                                 <div class="field span-2">
                                     <label for="field-logo">中央 Logo（選填）</label>
-                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <div class="file-upload">
+                                        <input type="file" id="field-logo" class="file-upload-input"
+                                            accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+                                        <button type="button" class="btn btn-ghost btn-sm" id="btn-pick-logo">選擇檔案</button>
+                                        <span class="file-upload-name" id="field-logo-name">未選擇檔案</span>
+                                    </div>
                                     <p class="field-hint">建議正方形透明 PNG，體積 &lt; 512KB</p>
                                     <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>移除 Logo</button>
                                 </div>

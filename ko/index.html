@@ -80,7 +80,12 @@
                                 </div>
                                 <div class="field span-2">
                                     <label for="field-logo">중앙 로고 (선택)</label>
-                                    <input type="file" id="field-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                                    <div class="file-upload">
+                                        <input type="file" id="field-logo" class="file-upload-input"
+                                            accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+                                        <button type="button" class="btn btn-ghost btn-sm" id="btn-pick-logo">파일 선택</button>
+                                        <span class="file-upload-name" id="field-logo-name">선택된 파일 없음</span>
+                                    </div>
                                     <p class="field-hint">정사각형 투명 PNG 권장, 512KB 미만</p>
                                     <button type="button" class="btn btn-ghost btn-sm" id="btn-clear-logo" hidden>로고 제거</button>
                                 </div>
