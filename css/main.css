@@ -447,12 +447,14 @@ body {
 }
 
 .preview-stage {
-    min-height: 240px;
+    min-height: 200px;
+    max-height: min(55vh, 480px);
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 16px;
+    overflow: auto;
     background: repeating-conic-gradient(#eee 0% 25%, #f8f8f8 0% 50%) 50% / 20px 20px;
     border: 1px solid var(--border-light);
     border-radius: 4px;
@@ -462,11 +464,32 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 100%;
 }
 
 #qr-preview canvas {
-    border-radius: 4px;
+    display: block;
+    max-width: 100%;
+    max-height: min(50vh, 440px);
+    width: auto;
+    height: auto;
     box-shadow: var(--shadow);
+}
+
+.preview-size-hint {
+    margin: 10px 0 0;
+    width: 100%;
+    font-size: 12px;
+    color: var(--text-placeholder);
+    text-align: center;
+}
+
+.bg-style-field {
+    margin-top: 12px;
+}
+
+.bg-style-field select {
+    max-width: 280px;
 }
 
 .preview-actions {

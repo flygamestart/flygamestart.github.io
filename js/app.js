@@ -1257,7 +1257,8 @@ var DEFAULT_FORM = {
   ecc: DEFAULT_ECC,
   logoDataUrl: "",
   cornerColor: "#111111",
-  useCustomCornerColor: false
+  useCustomCornerColor: false,
+  bgStyle: "square"
 };
 var DOT_TYPES = [
   { value: "rounded", label: "\u5706\u89D2\u5757" },
@@ -1277,6 +1278,16 @@ var CORNER_DOT_TYPES = [
   { value: "dot", label: "\u5706\u70B9" },
   { value: "rounded", label: "\u5706\u89D2" }
 ];
+var BG_STYLES = [
+  { value: "square", shape: "square", round: 0 },
+  { value: "rounded", shape: "square", round: 0.12 },
+  { value: "soft-rounded", shape: "square", round: 0.22 },
+  { value: "circle", shape: "circle", round: 0 }
+];
+function resolveBgStyle(bgStyle) {
+  const found = BG_STYLES.find((s) => s.value === bgStyle);
+  return found ?? BG_STYLES[0];
+}
 
 // src/color-utils.ts
 function hexToRgb(hex) {
@@ -1371,15 +1382,18 @@ function formToStyleConfig(form) {
     ecc: form.ecc || DEFAULT_ECC,
     logoDataUrl: form.logoDataUrl || "",
     cornerColor: form.cornerColor || form.fgColor || "#111111",
-    useCustomCornerColor: !!form.useCustomCornerColor
+    useCustomCornerColor: !!form.useCustomCornerColor,
+    bgStyle: form.bgStyle || "square"
   };
 }
 function styleConfigToQrOptions(cfg) {
   const dotsColor = dotsColorOptions(cfg);
   const cornerColor = cornerColorOptions(cfg);
+  const bg = resolveBgStyle(cfg.bgStyle);
   const options = {
     width: cfg.size,
     height: cfg.size,
+    shape: bg.shape,
     type: "canvas",
     data: cfg.text,
     margin: cfg.margin,
@@ -1397,7 +1411,8 @@ function styleConfigToQrOptions(cfg) {
       ...cornerColor
     },
     backgroundOptions: {
-      color: cfg.bgColor
+      color: cfg.bgColor,
+      round: bg.round
     }
   };
   if (cfg.logoDataUrl) {
@@ -1471,6 +1486,12 @@ var messages = {
       dot: "\u5706\u70B9",
       rounded: "\u5706\u89D2"
     },
+    bgStyleTypes: {
+      square: "\u65B9\u5F62",
+      rounded: "\u5706\u89D2",
+      "soft-rounded": "\u5927\u5706\u89D2",
+      circle: "\u5706\u5F62"
+    },
     toast: {
       restored: "\u5DF2\u8F7D\u5165\u5386\u53F2\u8BB0\u5F55\uFF0C\u53EF\u7EE7\u7EED\u7F16\u8F91",
       generateFailed: "\u751F\u6210\u5931\u8D25",
@@ -1497,7 +1518,8 @@ var messages = {
       pickFile: "\u9009\u62E9\u6587\u4EF6",
       noFileSelected: "\u672A\u9009\u62E9\u6587\u4EF6",
       imageLoaded: "\u5DF2\u9009\u62E9\u56FE\u7247",
-      logoPresets: "\u9884\u8BBE\u56FE\u6807\uFF08\u70B9\u51FB\u9009\u7528\uFF09"
+      logoPresets: "\u9884\u8BBE\u56FE\u6807\uFF08\u70B9\u51FB\u9009\u7528\uFF09",
+      previewScaled: "\u9884\u89C8\u5DF2\u7F29\u653E \xB7 \u5BFC\u51FA"
     },
     logoCategories: {
       contact: "\u8054\u7CFB",
@@ -1563,6 +1585,12 @@ var messages = {
       dot: "Dot",
       rounded: "Rounded"
     },
+    bgStyleTypes: {
+      square: "Square",
+      rounded: "Rounded",
+      "soft-rounded": "Soft rounded",
+      circle: "Circle"
+    },
     toast: {
       restored: "History loaded \u2014 you can keep editing",
       generateFailed: "Failed to generate QR code",
@@ -1589,7 +1617,8 @@ var messages = {
       pickFile: "Choose file",
       noFileSelected: "No file chosen",
       imageLoaded: "Image selected",
-      logoPresets: "Preset icons (click to use)"
+      logoPresets: "Preset icons (click to use)",
+      previewScaled: "Scaled preview \xB7 export"
     },
     logoCategories: {
       contact: "Contact",
@@ -1655,6 +1684,12 @@ var messages = {
       dot: "\u30C9\u30C3\u30C8",
       rounded: "\u89D2\u4E38"
     },
+    bgStyleTypes: {
+      square: "\u30B9\u30AF\u30A8\u30A2",
+      rounded: "\u89D2\u4E38",
+      "soft-rounded": "\u5927\u304D\u306A\u89D2\u4E38",
+      circle: "\u5186\u5F62"
+    },
     toast: {
       restored: "\u5C65\u6B74\u3092\u8AAD\u307F\u8FBC\u307F\u307E\u3057\u305F\u3002\u7DE8\u96C6\u3092\u7D9A\u3051\u3089\u308C\u307E\u3059",
       generateFailed: "QR\u30B3\u30FC\u30C9\u306E\u751F\u6210\u306B\u5931\u6557\u3057\u307E\u3057\u305F",
@@ -1681,7 +1716,8 @@ var messages = {
       pickFile: "\u30D5\u30A1\u30A4\u30EB\u3092\u9078\u629E",
       noFileSelected: "\u30D5\u30A1\u30A4\u30EB\u672A\u9078\u629E",
       imageLoaded: "\u753B\u50CF\u3092\u9078\u629E\u6E08\u307F",
-      logoPresets: "\u30D7\u30EA\u30BB\u30C3\u30C8\u30A2\u30A4\u30B3\u30F3\uFF08\u30AF\u30EA\u30C3\u30AF\u3067\u9078\u629E\uFF09"
+      logoPresets: "\u30D7\u30EA\u30BB\u30C3\u30C8\u30A2\u30A4\u30B3\u30F3\uFF08\u30AF\u30EA\u30C3\u30AF\u3067\u9078\u629E\uFF09",
+      previewScaled: "\u30D7\u30EC\u30D3\u30E5\u30FC\u7E2E\u5C0F\u8868\u793A \xB7 \u51FA\u529B"
     },
     logoCategories: {
       contact: "\u9023\u7D61",
@@ -1747,6 +1783,12 @@ var messages = {
       dot: "\uC810",
       rounded: "\uB465\uADFC"
     },
+    bgStyleTypes: {
+      square: "\uC0AC\uAC01\uD615",
+      rounded: "\uB465\uADFC \uBAA8\uC11C\uB9AC",
+      "soft-rounded": "\uD070 \uB465\uADFC \uBAA8\uC11C\uB9AC",
+      circle: "\uC6D0\uD615"
+    },
     toast: {
       restored: "\uAE30\uB85D\uC744 \uBD88\uB7EC\uC654\uC2B5\uB2C8\uB2E4. \uACC4\uC18D \uD3B8\uC9D1\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4",
       generateFailed: "QR \uCF54\uB4DC \uC0DD\uC131\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4",
@@ -1773,7 +1815,8 @@ var messages = {
       pickFile: "\uD30C\uC77C \uC120\uD0DD",
       noFileSelected: "\uC120\uD0DD\uB41C \uD30C\uC77C \uC5C6\uC74C",
       imageLoaded: "\uC774\uBBF8\uC9C0 \uC120\uD0DD\uB428",
-      logoPresets: "\uD504\uB9AC\uC14B \uC544\uC774\uCF58 (\uD074\uB9AD\uD558\uC5EC \uC120\uD0DD)"
+      logoPresets: "\uD504\uB9AC\uC14B \uC544\uC774\uCF58 (\uD074\uB9AD\uD558\uC5EC \uC120\uD0DD)",
+      previewScaled: "\uBBF8\uB9AC\uBCF4\uAE30 \uCD95\uC18C \xB7 \uB2E4\uC6B4\uB85C\uB4DC"
     },
     logoCategories: {
       contact: "\uC5F0\uB77D",
@@ -1839,6 +1882,12 @@ var messages = {
       dot: "\u5713\u9EDE",
       rounded: "\u5713\u89D2"
     },
+    bgStyleTypes: {
+      square: "\u65B9\u5F62",
+      rounded: "\u5713\u89D2",
+      "soft-rounded": "\u5927\u5713\u89D2",
+      circle: "\u5713\u5F62"
+    },
     toast: {
       restored: "\u5DF2\u8F09\u5165\u6B77\u53F2\u8A18\u9304\uFF0C\u53EF\u7E7C\u7E8C\u7DE8\u8F2F",
       generateFailed: "\u7522\u751F\u5931\u6557",
@@ -1865,7 +1914,8 @@ var messages = {
       pickFile: "\u9078\u64C7\u6A94\u6848",
       noFileSelected: "\u672A\u9078\u64C7\u6A94\u6848",
       imageLoaded: "\u5DF2\u9078\u64C7\u5716\u7247",
-      logoPresets: "\u9810\u8A2D\u5716\u793A\uFF08\u9EDE\u64CA\u9078\u7528\uFF09"
+      logoPresets: "\u9810\u8A2D\u5716\u793A\uFF08\u9EDE\u64CA\u9078\u7528\uFF09",
+      previewScaled: "\u9810\u89BD\u5DF2\u7E2E\u653E \xB7 \u532F\u51FA"
     },
     logoCategories: {
       contact: "\u806F\u7D61",
@@ -1952,6 +2002,10 @@ function cornerSquareTypeLabel(value, locale2 = getLocale()) {
 }
 function cornerDotTypeLabel(value, locale2 = getLocale()) {
   const types = messages[locale2].cornerDotTypes;
+  return types[value] ?? value;
+}
+function bgStyleTypeLabel(value, locale2 = getLocale()) {
+  const types = messages[locale2].bgStyleTypes;
   return types[value] ?? value;
 }
 function msg(key, locale2 = getLocale()) {
@@ -2221,6 +2275,7 @@ var els = {
   cornerDotType: queryRequired("field-corner-dot-type"),
   fgColor: queryRequired("field-fg-color"),
   bgColor: queryRequired("field-bg-color"),
+  bgStyle: queryRequired("field-bg-style"),
   useGradient: queryRequired("field-use-gradient"),
   cornerColor: queryRequired("field-corner-color"),
   cornerColorCustom: queryRequired("corner-color-custom"),
@@ -2233,6 +2288,7 @@ var els = {
   logoCategoryTabs: queryRequired("logo-category-tabs"),
   logoPresetGrid: queryRequired("logo-preset-grid"),
   preview: queryRequired("qr-preview"),
+  previewSizeHint: queryRequired("preview-size-hint"),
   presetGrid: queryRequired("preset-grid"),
   btnGenerate: queryRequired("btn-generate"),
   btnDownloadPng: queryRequired("btn-download-png"),
@@ -2287,7 +2343,8 @@ function readForm() {
     ecc: DEFAULT_FORM.ecc,
     logoDataUrl,
     cornerColor: els.cornerColor.value,
-    useCustomCornerColor: els.useCustomCornerColor.checked
+    useCustomCornerColor: els.useCustomCornerColor.checked,
+    bgStyle: els.bgStyle.value
   };
 }
 function syncCornerColorUi() {
@@ -2311,6 +2368,7 @@ function fillForm(style) {
   fgGradient = style.fgGradient ?? null;
   els.cornerColor.value = style.cornerColor ?? style.fgColor ?? "#111111";
   els.useCustomCornerColor.checked = !!style.useCustomCornerColor;
+  els.bgStyle.value = style.bgStyle ?? "square";
   logoDataUrl = style.logoDataUrl ?? "";
   selectedLogoPresetId = "";
   syncCornerColorUi();
@@ -2406,10 +2464,22 @@ function syncPresetCards() {
     card.classList.toggle("is-active", card.dataset.preset === id);
   });
 }
+function syncPreviewHint(size) {
+  const stage = els.preview.closest(".preview-stage");
+  const canvas = els.preview.querySelector("canvas");
+  if (!stage || !canvas) {
+    els.previewSizeHint.textContent = "";
+    return;
+  }
+  const displayW = canvas.getBoundingClientRect().width;
+  const scaled = size > 0 && displayW > 0 && displayW < size - 2;
+  els.previewSizeHint.textContent = scaled ? `${formUi("previewScaled", locale)} ${size}\xD7${size}px` : `${size}\xD7${size}px`;
+}
 function renderPreview() {
   const cfg = formToStyleConfig(readForm());
   if (!cfg.text) {
     els.preview.innerHTML = "";
+    els.previewSizeHint.textContent = "";
     currentQr = null;
     currentStyle = null;
     return;
@@ -2417,6 +2487,7 @@ function renderPreview() {
   try {
     currentQr = createQrInstance(els.preview, cfg);
     currentStyle = cfg;
+    requestAnimationFrame(() => syncPreviewHint(cfg.size));
   } catch (err) {
     els.preview.innerHTML = "";
     currentQr = null;
@@ -2458,6 +2529,7 @@ function initSelects() {
   els.dotType.innerHTML = "";
   els.cornerSquareType.innerHTML = "";
   els.cornerDotType.innerHTML = "";
+  els.bgStyle.innerHTML = "";
   els.preset.innerHTML = "";
   for (const d of DOT_TYPES) {
     const opt = document.createElement("option");
@@ -2477,6 +2549,12 @@ function initSelects() {
     opt.textContent = cornerDotTypeLabel(d.value);
     els.cornerDotType.appendChild(opt);
   }
+  for (const s of BG_STYLES) {
+    const opt = document.createElement("option");
+    opt.value = s.value;
+    opt.textContent = bgStyleTypeLabel(s.value);
+    els.bgStyle.appendChild(opt);
+  }
   for (const p of Object.values(STYLE_PRESETS)) {
     const opt = document.createElement("option");
     opt.value = p.id;
@@ -2489,6 +2567,10 @@ function bindEvents() {
   els.form.addEventListener("change", debouncedPreview);
   els.size.addEventListener("input", () => {
     els.sizeVal.textContent = `${els.size.value}px`;
+    requestAnimationFrame(() => {
+      const cfg = currentStyle;
+      if (cfg) syncPreviewHint(cfg.size);
+    });
   });
   els.preset.addEventListener("change", () => {
     const next = applyPresetToForm(readForm(), els.preset.value);
