@@ -1757,4 +1757,3 @@ function init() {
   historyView.render();
 }
 init();
-//# sourceMappingURL=app.js.map
