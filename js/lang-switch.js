@@ -27,8 +27,8 @@
     }
 
     function targetUrl(localeDir, file) {
-        if (!localeDir) return file === "index.html" ? "./index.html" : "./" + file;
-        return file === "index.html" ? "./" + localeDir + "/index.html" : "./" + localeDir + "/" + file;
+        if (!localeDir) return file === "index.html" ? "/" : "/" + file;
+        return file === "index.html" ? "/" + localeDir + "/" : "/" + localeDir + "/" + file;
     }
 
     document.querySelectorAll("[data-lang-switch]").forEach(function (host) {
