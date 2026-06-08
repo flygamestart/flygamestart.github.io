@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Standard WIFI URI format, examples, and placement tips for FlyQRCode.">
+    <meta name="robots" content="index, follow">
+    <title>How to Create a WiFi QR Code (Format & Examples) - FlyQRCode</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/guides/wifi-qr.html">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="canonical" href="https://flygamestart.github.io/ja/guides/wifi-qr.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlyQRCode">
+    <meta property="og:title" content="How to Create a WiFi QR Code (Format &amp; Examples) - FlyQRCode">
+    <meta property="og:description" content="Standard WIFI URI format, examples, and placement tips for FlyQRCode.">
+    <meta property="og:url" content="https://flygamestart.github.io/ja/guides/wifi-qr.html">
+    <meta property="og:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="How to Create a WiFi QR Code (Format &amp; Examples) - FlyQRCode">
+    <meta name="twitter:description" content="Standard WIFI URI format, examples, and placement tips for FlyQRCode.">
+    <meta name="twitter:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "How to Create a WiFi QR Code (Format & Examples) - FlyQRCode",
+      "description": "Standard WIFI URI format, examples, and placement tips for FlyQRCode.",
+      "url": "https://flygamestart.github.io/ja/guides/wifi-qr.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "FlyQRCode",
+        "url": "https://flygamestart.github.io/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner banner-compact">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>How to Create a WiFi QR Code (Format & Examples)</h1>
+            <p>Let guests connect without typing passwords</p>
+            <nav class="site-nav" aria-label="Navigation">
+    <a href="/ja/index.html">ホーム</a>
+    <a href="/ja/guides/index.html">ガイド</a>
+    <a href="/ja/about.html">概要</a>
+    <a href="/ja/contact.html">お問い合わせ</a>
+    <a href="/ja/privacy.html">プライバシー</a>
+    <a href="/ja/terms.html">利用規約</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <article class="panel legal-page">
+            <div class="panel-body prose">
+                <h2>Why WiFi QR codes?</h2>
+<p>Cafés, stores, and offices often repeat network names and passwords. A WiFi QR code lets visitors connect with one scan — fewer questions at the counter and a smoother experience.</p>
+<h2>Standard format</h2>
+<pre><code>WIFI:T:WPA;S:MyNetwork;P:MyPassword;;</code></pre>
+<ul>
+<li><strong>T</strong> — security: <code>WPA</code>, <code>WEP</code>, or <code>nopass</code></li>
+<li><strong>S</strong> — SSID (case-sensitive)</li>
+<li><strong>P</strong> — password (omit for open networks)</li>
+<li>End with <code>;;</code></li>
+</ul>
+<h2>Generate with FlyQRCode</h2>
+<ol>
+<li>Open the <a href="../index.html">generator</a> and paste the string;</li>
+<li>Use high-contrast presets for print;</li>
+<li>Size 280–400px, margin ≥ 12;</li>
+<li>Download PNG for signs or SVG for print shops.</li>
+</ol>
+<h2>Testing</h2>
+<p>Test with iPhone Camera, Android Camera, and your regional super-app scanner before posting. Avoid glossy curved surfaces and strong backlight.</p>
+<h2>FAQ</h2>
+<p><strong>No reaction when scanning?</strong> Check extra spaces and exact SSID match. Do not publish WiFi QRs on the public internet — use them offline only.</p>
+                <hr>
+                <p><a href="./index.html">ガイド</a> · <a href="/ja/index.html">生成器に戻る</a></p>
+            </div>
+        </article>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer">
+        <a href="/ja/index.html">ホーム</a>
+        <a href="/ja/guides/index.html">ガイド</a>
+        <a href="/ja/about.html">概要</a>
+        <a href="/ja/contact.html">お問い合わせ</a>
+        <a href="/ja/privacy.html">プライバシー</a>
+        <a href="/ja/terms.html">利用規約</a>
+    </nav>
+    <p class="footer-note">QR内容はブラウザ内で処理されます。履歴は端末にのみ保存され、アップロードされません。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> © FlyQRCode. All rights reserved.</p>
+</footer>
+<script>(function(){var y=document.getElementById("footer-year");if(y)y.textContent=String(new Date().getFullYear());})();</script>
+
+    </div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookieと広告について</p>
+        <p class="cookie-text">基本機能のためCookieを使用し、同意いただいた場合はGoogle等のパーソナライズ広告を表示します。 <a href="./privacy.html">プライバシーポリシー</a>. <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google</a></p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">同意する</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">必須Cookieのみ</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../../js/site-config.js"></script>
+    <script src="../../js/lang-switch.js"></script>
+    <script src="../../js/cookie-consent.js"></script>
+</body>
+</html>

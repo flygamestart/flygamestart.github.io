@@ -100,14 +100,15 @@
             <span class="banner-tag">FlyQRCode</span>
             <h1>二维码生成</h1>
             <p>自定义样式、实时预览、历史记录与一键下载 PNG / SVG</p>
-            <nav class="site-nav" aria-label="主导航">
-    <a href="./index.html">首页</a>
-    <a href="./about.html">关于我们</a>
-    <a href="./contact.html">联系我们</a>
-    <a href="./privacy.html">隐私政策</a>
-    <a href="./terms.html">使用条款</a>
-    <span data-lang-switch class="lang-switch"></span>
-</nav>
+            <nav class="site-nav" aria-label="主导航">
+    <a href="/index.html">首页</a>
+    <a href="/guides/index.html">使用指南</a>
+    <a href="/about.html">关于我们</a>
+    <a href="/contact.html">联系我们</a>
+    <a href="/privacy.html">隐私政策</a>
+    <a href="/terms.html">使用条款</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
 
         </header>
 
@@ -250,6 +251,16 @@
                             印刷场景建议使用「极简黑白」预设并保留足够静区（边距）；屏幕展示可尝试渐变与圆角样式。
                             若添加 Logo，请确保对比度充足，并在正式投放前用手机实际扫码测试。
                         </p>
+                        <h3>深度指南</h3>
+                        <p>需要更详细的说明？请参阅我们的专题教程：</p>
+                        <ul>
+                            <li><a href="./guides/wifi-qr.html">WiFi 二维码生成教程</a></li>
+                            <li><a href="./guides/logo-qr.html">带 Logo 的二维码设计</a></li>
+                            <li><a href="./guides/print-qr.html">印刷用二维码尺寸与格式</a></li>
+                            <li><a href="./guides/scan-troubleshooting.html">扫不出来？故障排查</a></li>
+                            <li><a href="./guides/content-formats.html">支持的内容格式说明</a></li>
+                        </ul>
+                        <p><a href="./guides/index.html">查看全部指南 →</a></p>
                         <h3>隐私说明</h3>
                         <p>
                             您输入的内容在浏览器本地生成二维码，我们不会将其上传至服务器。
@@ -292,23 +303,24 @@
             </aside>
         </div>
 
-        <footer class="site-footer">
-    <nav class="footer-nav" aria-label="页脚导航">
-        <a href="./index.html">首页</a>
-        <a href="./about.html">关于我们</a>
-        <a href="./contact.html">联系我们</a>
-        <a href="./privacy.html">隐私政策</a>
-        <a href="./terms.html">使用条款</a>
-    </nav>
-    <p class="footer-note">二维码内容仅在您的浏览器本地处理；历史记录保存在本机，不会上传至服务器。</p>
-    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. 保留所有权利。</p>
-</footer>
-<script>
-    (function () {
-        var yearEl = document.getElementById("footer-year");
-        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-    })();
-</script>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="页脚导航">
+        <a href="/index.html">首页</a>
+        <a href="/guides/index.html">使用指南</a>
+        <a href="/about.html">关于我们</a>
+        <a href="/contact.html">联系我们</a>
+        <a href="/privacy.html">隐私政策</a>
+        <a href="/terms.html">使用条款</a>
+    </nav>
+    <p class="footer-note">二维码内容仅在您的浏览器本地处理；历史记录保存在本机，不会上传至服务器。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. 保留所有权利。</p>
+</footer>
+<script>
+    (function () {
+        var yearEl = document.getElementById("footer-year");
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+</script>
 
     </div>
 

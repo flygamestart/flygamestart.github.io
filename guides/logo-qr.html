@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="中心 Logo、颜色对比、纠错等级与尺寸比例的最佳实践，避免 Logo 导致无法扫描。">
+    <meta name="robots" content="index, follow">
+    <title>带 Logo 的二维码如何设计才扫得稳？ - FlyQRCode</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/guides/logo-qr.html">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/guides/logo-qr.html">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/guides/logo-qr.html">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/guides/logo-qr.html">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/guides/logo-qr.html">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/guides/logo-qr.html">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="canonical" href="https://flygamestart.github.io/guides/logo-qr.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlyQRCode">
+    <meta property="og:title" content="带 Logo 的二维码如何设计才扫得稳？ - FlyQRCode">
+    <meta property="og:description" content="中心 Logo、颜色对比、纠错等级与尺寸比例的最佳实践，避免 Logo 导致无法扫描。">
+    <meta property="og:url" content="https://flygamestart.github.io/guides/logo-qr.html">
+    <meta property="og:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="带 Logo 的二维码如何设计才扫得稳？ - FlyQRCode">
+    <meta name="twitter:description" content="中心 Logo、颜色对比、纠错等级与尺寸比例的最佳实践，避免 Logo 导致无法扫描。">
+    <meta name="twitter:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "带 Logo 的二维码如何设计才扫得稳？ - FlyQRCode",
+      "description": "中心 Logo、颜色对比、纠错等级与尺寸比例的最佳实践，避免 Logo 导致无法扫描。",
+      "url": "https://flygamestart.github.io/guides/logo-qr.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "FlyQRCode",
+        "url": "https://flygamestart.github.io/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner banner-compact">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>带 Logo 的二维码如何设计才扫得稳？</h1>
+            <p>品牌识别与扫码成功率如何兼顾</p>
+            <nav class="site-nav" aria-label="主导航">
+    <a href="/index.html">首页</a>
+    <a href="/guides/index.html">使用指南</a>
+    <a href="/about.html">关于我们</a>
+    <a href="/contact.html">联系我们</a>
+    <a href="/privacy.html">隐私政策</a>
+    <a href="/terms.html">使用条款</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <article class="panel legal-page">
+            <div class="panel-body prose">
+                <h2>中心 Logo 的作用</h2>
+<p>在二维码中心加入品牌 Logo，可以在海报、产品包装与名片上强化识别度。FlyQRCode 支持上传 PNG/WebP/SVG 或选用预设社交图标。Logo 会覆盖部分数据模块，因此需要合理控制大小与对比度。</p>
+<h2>设计原则</h2>
+<ul>
+<li><strong>Logo 面积</strong>：建议不超过二维码空白区域的 30%～38%。FlyQRCode 默认约 38%，若扫码失败请换更小 Logo 或简化图形。</li>
+<li><strong>形状</strong>：使用正方形、透明底 PNG 效果最佳；避免细长横条 Logo。</li>
+<li><strong>对比度</strong>：码点与背景必须反差明显。深色码点配浅色底，或反之。避免渐变与背景色过于接近。</li>
+<li><strong>纠错等级</strong>：本工具默认 ECC Q（约 25% 容错），适合带 Logo 的场景。Logo 较大时可尝试更高等级（若未来开放选项）。</li>
+</ul>
+<h2>推荐工作流</h2>
+<ol>
+<li>先用默认样式生成无 Logo 版本，确认内容正确；</li>
+<li>再添加 Logo，从预设图标或小尺寸 PNG 开始；</li>
+<li>每改一次颜色或 Logo，用手机实扫验证；</li>
+<li>满意后下载 PNG（线上分享）或 SVG（印刷）。</li>
+</ol>
+<h2>颜色与渐变</h2>
+<p>品牌色可以使用，但请避免「浅灰码点 + 白底」等低对比组合。渐变预设美观，但若扫码环境光线不足，建议改用纯色高对比方案用于关键物料。</p>
+<h2>常见失败原因</h2>
+<p>Logo 过大、Logo 背景不透明块覆盖过多模块、印刷尺寸过小（小于 2cm）、屏幕亮度不足或摄像头模糊。逐项排除后再重新导出。</p>
+                <hr>
+                <p><a href="./index.html">使用指南</a> · <a href="/index.html">返回二维码生成器</a></p>
+            </div>
+        </article>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="页脚导航">
+        <a href="/index.html">首页</a>
+        <a href="/guides/index.html">使用指南</a>
+        <a href="/about.html">关于我们</a>
+        <a href="/contact.html">联系我们</a>
+        <a href="/privacy.html">隐私政策</a>
+        <a href="/terms.html">使用条款</a>
+    </nav>
+    <p class="footer-note">二维码内容仅在您的浏览器本地处理；历史记录保存在本机，不会上传至服务器。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. 保留所有权利。</p>
+</footer>
+<script>
+    (function () {
+        var yearEl = document.getElementById("footer-year");
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+</script>
+
+    </div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookie 与广告说明</p>
+        <p class="cookie-text">
+            我们使用 Cookie 以保障网站基本功能，并在您同意后展示由 Google 等第三方提供的个性化广告。
+            详情请参阅<a href="./privacy.html">隐私政策</a>。您可随时在
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google 广告设置</a>
+            中管理偏好。
+        </p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">接受</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">仅必要 Cookie</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+</body>
+</html>

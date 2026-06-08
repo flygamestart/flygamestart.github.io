@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="教您用标准 WIFI 字符串生成 WiFi 二维码，含 Android/iOS 兼容写法、示例与张贴位置建议。">
+    <meta name="robots" content="index, follow">
+    <title>WiFi 二维码怎么生成？格式、示例与张贴建议 - FlyQRCode</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/guides/wifi-qr.html">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/guides/wifi-qr.html">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="canonical" href="https://flygamestart.github.io/guides/wifi-qr.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlyQRCode">
+    <meta property="og:title" content="WiFi 二维码怎么生成？格式、示例与张贴建议 - FlyQRCode">
+    <meta property="og:description" content="教您用标准 WIFI 字符串生成 WiFi 二维码，含 Android/iOS 兼容写法、示例与张贴位置建议。">
+    <meta property="og:url" content="https://flygamestart.github.io/guides/wifi-qr.html">
+    <meta property="og:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WiFi 二维码怎么生成？格式、示例与张贴建议 - FlyQRCode">
+    <meta name="twitter:description" content="教您用标准 WIFI 字符串生成 WiFi 二维码，含 Android/iOS 兼容写法、示例与张贴位置建议。">
+    <meta name="twitter:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "WiFi 二维码怎么生成？格式、示例与张贴建议 - FlyQRCode",
+      "description": "教您用标准 WIFI 字符串生成 WiFi 二维码，含 Android/iOS 兼容写法、示例与张贴位置建议。",
+      "url": "https://flygamestart.github.io/guides/wifi-qr.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "FlyQRCode",
+        "url": "https://flygamestart.github.io/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner banner-compact">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>WiFi 二维码怎么生成？格式、示例与张贴建议</h1>
+            <p>让顾客扫码连网，无需口头报密码</p>
+            <nav class="site-nav" aria-label="主导航">
+    <a href="/index.html">首页</a>
+    <a href="/guides/index.html">使用指南</a>
+    <a href="/about.html">关于我们</a>
+    <a href="/contact.html">联系我们</a>
+    <a href="/privacy.html">隐私政策</a>
+    <a href="/terms.html">使用条款</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <article class="panel legal-page">
+            <div class="panel-body prose">
+                <h2>为什么用 WiFi 二维码？</h2>
+<p>在咖啡馆、门店、会议室或家庭聚会中，反复告知 WiFi 名称和密码既低效又容易出错。WiFi 二维码让访客用手机相机或微信扫一扫即可连接网络，减少前台咨询，提升体验。</p>
+<h2>标准内容格式</h2>
+<p>最常见的是 <code>WIFI:</code> URI 格式，适用于多数扫码应用：</p>
+<pre><code>WIFI:T:WPA;S:MyNetwork;P:MyPassword;;</code></pre>
+<ul>
+<li><strong>T</strong>：加密类型，常用 <code>WPA</code>（含 WPA2/WPA3）、<code>WEP</code> 或 <code>nopass</code>（开放网络）</li>
+<li><strong>S</strong>：SSID，即 WiFi 名称（区分大小写）</li>
+<li><strong>P</strong>：密码；开放网络可省略</li>
+<li>末尾使用 <code>;;</code> 结束</li>
+</ul>
+<p>若 SSID 或密码含特殊字符（分号、逗号、反斜杠等），需按 URI 规则转义。不确定时，建议先用简单密码测试，确认可扫后再更换正式密码。</p>
+<h2>在 FlyQRCode 中生成</h2>
+<ol>
+<li>打开<a href="../index.html">首页生成器</a>，在「二维码内容」中粘贴上述字符串；</li>
+<li>选择「极简黑白」或高对比预设，保证打印清晰；</li>
+<li>尺寸建议 280～400px，边距不小于 12；</li>
+<li>下载 PNG 用于张贴，或 SVG 交给广告公司放大印刷。</li>
+</ol>
+<h2>张贴与测试建议</h2>
+<p>将二维码贴在收银台、入口或桌卡上，旁边用文字注明「扫码连接 WiFi」。正式启用前，请分别用 <strong>iPhone 相机</strong>、<strong>Android 原生相机</strong> 与 <strong>微信扫一扫</strong> 测试，确保主流设备可用。避免把码贴在反光曲面或强背光处。</p>
+<h2>常见问题</h2>
+<p><strong>扫了没反应？</strong> 检查字符串是否有多余空格、SSID 是否与路由器完全一致。部分旧设备仅支持 WPA 字段，可尝试改为 <code>WPA</code> 而非 <code>WPA2</code> 字样（内容仍为同一网络）。</p>
+<p><strong>能否隐藏密码？</strong> 二维码本身必须编码密码才能自动连接，请勿将 WiFi 码发布到公开互联网，仅用于线下张贴。</p>
+                <hr>
+                <p><a href="./index.html">使用指南</a> · <a href="/index.html">返回二维码生成器</a></p>
+            </div>
+        </article>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="页脚导航">
+        <a href="/index.html">首页</a>
+        <a href="/guides/index.html">使用指南</a>
+        <a href="/about.html">关于我们</a>
+        <a href="/contact.html">联系我们</a>
+        <a href="/privacy.html">隐私政策</a>
+        <a href="/terms.html">使用条款</a>
+    </nav>
+    <p class="footer-note">二维码内容仅在您的浏览器本地处理；历史记录保存在本机，不会上传至服务器。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. 保留所有权利。</p>
+</footer>
+<script>
+    (function () {
+        var yearEl = document.getElementById("footer-year");
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+</script>
+
+    </div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookie 与广告说明</p>
+        <p class="cookie-text">
+            我们使用 Cookie 以保障网站基本功能，并在您同意后展示由 Google 等第三方提供的个性化广告。
+            详情请参阅<a href="./privacy.html">隐私政策</a>。您可随时在
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google 广告设置</a>
+            中管理偏好。
+        </p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">接受</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">仅必要 Cookie</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+</body>
+</html>

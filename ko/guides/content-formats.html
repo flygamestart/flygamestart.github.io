@@ -2,40 +2,37 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <script src="../js/locale-redirect.js"></script>
+    <script src="../../js/locale-redirect.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="피드백과 문의를 환영합니다">
-    
+    <meta name="description" content="Overview of URL, plain text, WiFi, mailto, tel, and SMS QR content.">
     <meta name="robots" content="index, follow">
-    <title>문의 - FlyQRCode</title>
-    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/contact.html">
-    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/contact.html">
-    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/contact.html">
-    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/contact.html">
-    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/contact.html">
-    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/contact.html">
-    <link rel="stylesheet" href="../css/main.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6654903504279698"
-        crossorigin="anonymous"></script>
-    <link rel="canonical" href="https://flygamestart.github.io/ko/contact.html">
+    <title>What Can You Encode? URLs, Text, WiFi & More - FlyQRCode</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/guides/content-formats.html">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/guides/content-formats.html">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/guides/content-formats.html">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/guides/content-formats.html">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/guides/content-formats.html">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/guides/content-formats.html">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="canonical" href="https://flygamestart.github.io/ko/guides/content-formats.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="FlyQRCode">
-    <meta property="og:title" content="문의 - FlyQRCode">
-    <meta property="og:description" content="피드백과 문의를 환영합니다">
-    <meta property="og:url" content="https://flygamestart.github.io/ko/contact.html">
+    <meta property="og:title" content="What Can You Encode? URLs, Text, WiFi &amp; More - FlyQRCode">
+    <meta property="og:description" content="Overview of URL, plain text, WiFi, mailto, tel, and SMS QR content.">
+    <meta property="og:url" content="https://flygamestart.github.io/ko/guides/content-formats.html">
     <meta property="og:image" content="https://flygamestart.github.io/assets/og-cover.png">
     <meta property="og:locale" content="ko_KR">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="문의 - FlyQRCode">
-    <meta name="twitter:description" content="피드백과 문의를 환영합니다">
+    <meta name="twitter:title" content="What Can You Encode? URLs, Text, WiFi &amp; More - FlyQRCode">
+    <meta name="twitter:description" content="Overview of URL, plain text, WiFi, mailto, tel, and SMS QR content.">
     <meta name="twitter:image" content="https://flygamestart.github.io/assets/og-cover.png">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "문의 - FlyQRCode",
-      "description": "피드백과 문의를 환영합니다",
-      "url": "https://flygamestart.github.io/ko/contact.html",
+      "name": "What Can You Encode? URLs, Text, WiFi & More - FlyQRCode",
+      "description": "Overview of URL, plain text, WiFi, mailto, tel, and SMS QR content.",
+      "url": "https://flygamestart.github.io/ko/guides/content-formats.html",
       "isPartOf": {
         "@type": "WebSite",
         "name": "FlyQRCode",
@@ -48,8 +45,8 @@
     <div class="page">
         <header class="banner banner-compact">
             <span class="banner-tag">FlyQRCode</span>
-            <h1>문의</h1>
-            <p>피드백과 문의를 환영합니다</p>
+            <h1>What Can You Encode? URLs, Text, WiFi & More</h1>
+            <p>Pick the right format for each use case</p>
             <nav class="site-nav" aria-label="Navigation">
     <a href="/ko/index.html">홈</a>
     <a href="/ko/guides/index.html">가이드</a>
@@ -62,7 +59,27 @@
 
         </header>
         <article class="panel legal-page">
-            <div class="panel-body prose"><h2>이메일</h2><p><a id="contact-email-link" href="mailto:flygamestart@163.com">flygamestart@163.com</a></p><h2>응답</h2><p>영업일 기준 3~5일 내 답변합니다.</p></div>
+            <div class="panel-body prose">
+                <h2>URLs</h2>
+<p>Most common: full <code>https://</code> links. Shorter URLs scan slightly easier.</p>
+<h2>Plain text</h2>
+<p>Shows text after scan — no automatic navigation.</p>
+<h2>WiFi</h2>
+<p>See our <a href="./wifi-qr.html">WiFi guide</a> for the WIFI URI format.</p>
+<h2>Email & phone</h2>
+<pre><code>mailto:support@example.com?subject=Hello</code></pre>
+<pre><code>tel:+1234567890</code></pre>
+<h2>Choosing a format</h2>
+<ul>
+<li>Open a webpage → URL;</li>
+<li>Join WiFi → WIFI URI;</li>
+<li>Show fixed text → plain text;</li>
+<li>Call a number → tel URI.</li>
+</ul>
+<p>Always re-download after changing content — old images still encode old data.</p>
+                <hr>
+                <p><a href="./index.html">가이드</a> · <a href="/ko/index.html">생성기로 돌아가기</a></p>
+            </div>
         </article>
         <footer class="site-footer">
     <nav class="footer-nav" aria-label="Footer">
@@ -90,16 +107,8 @@
     </div>
 </div>
 
-    <script src="../js/site-config.js"></script>
-    <script src="../js/lang-switch.js"></script>
-    <script src="../js/cookie-consent.js"></script>
-    <script>
-        (function () {
-            var cfg = window.SITE_CONFIG || {};
-            var email = cfg.contactEmail || "flygamestart@163.com";
-            var link = document.getElementById("contact-email-link");
-            if (link) { link.href = "mailto:" + email; link.textContent = email; }
-        })();
-    </script>
+    <script src="../../js/site-config.js"></script>
+    <script src="../../js/lang-switch.js"></script>
+    <script src="../../js/cookie-consent.js"></script>
 </body>
 </html>

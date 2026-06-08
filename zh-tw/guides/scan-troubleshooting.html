@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <script src="../../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="扫码失败的 10+ 常见原因：对比度、尺寸、链接错误、光线与设备兼容性。">
+    <meta name="robots" content="index, follow">
+    <title>二维码扫不出来？常见原因与排查步骤 - FlyQRCode</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/guides/scan-troubleshooting.html">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/guides/scan-troubleshooting.html">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/guides/scan-troubleshooting.html">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/guides/scan-troubleshooting.html">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/guides/scan-troubleshooting.html">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/guides/scan-troubleshooting.html">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="canonical" href="https://flygamestart.github.io/zh-tw/guides/scan-troubleshooting.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlyQRCode">
+    <meta property="og:title" content="二维码扫不出来？常见原因与排查步骤 - FlyQRCode">
+    <meta property="og:description" content="扫码失败的 10+ 常见原因：对比度、尺寸、链接错误、光线与设备兼容性。">
+    <meta property="og:url" content="https://flygamestart.github.io/zh-tw/guides/scan-troubleshooting.html">
+    <meta property="og:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <meta property="og:locale" content="zh_TW">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="二维码扫不出来？常见原因与排查步骤 - FlyQRCode">
+    <meta name="twitter:description" content="扫码失败的 10+ 常见原因：对比度、尺寸、链接错误、光线与设备兼容性。">
+    <meta name="twitter:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "二维码扫不出来？常见原因与排查步骤 - FlyQRCode",
+      "description": "扫码失败的 10+ 常见原因：对比度、尺寸、链接错误、光线与设备兼容性。",
+      "url": "https://flygamestart.github.io/zh-tw/guides/scan-troubleshooting.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "FlyQRCode",
+        "url": "https://flygamestart.github.io/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner banner-compact">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>二维码扫不出来？常见原因与排查步骤</h1>
+            <p>从内容、样式到张贴环境，系统排查</p>
+            <nav class="site-nav" aria-label="Navigation">
+    <a href="/zh-tw/index.html">首頁</a>
+    <a href="/zh-tw/guides/index.html">使用指南</a>
+    <a href="/zh-tw/about.html">關於我們</a>
+    <a href="/zh-tw/contact.html">聯絡我們</a>
+    <a href="/zh-tw/privacy.html">隱私權政策</a>
+    <a href="/zh-tw/terms.html">使用條款</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <article class="panel legal-page">
+            <div class="panel-body prose">
+                <h2>先确认：是「无法识别」还是「识别后打不开」？</h2>
+<p>若相机完全没有反应，多为图形质量问题；若能识别但跳转失败，多为<strong>内容错误</strong>或<strong>链接失效</strong>。请先区分两种情况。</p>
+<h2>内容类问题</h2>
+<ul>
+<li>URL 缺少 <code>https://</code> 或拼写错误；</li>
+<li>WiFi 字符串格式不符合 <code>WIFI:T:...;S:...;P:...;;</code>；</li>
+<li>文本过长导致密度过高，可缩短链接或使用短链；</li>
+<li>链接已过期、内网地址外网无法访问。</li>
+</ul>
+<h2>样式类问题</h2>
+<ul>
+<li>对比度过低（浅灰 on 白）；</li>
+<li>渐变导致部分模块难以识别；</li>
+<li>Logo 过大遮挡关键区域；</li>
+<li>角标或码点形状过于花哨，在低端机上兼容差。</li>
+</ul>
+<p>排查建议：临时改为「极简黑白」、移除 Logo、增大尺寸后再次测试。</p>
+<h2>尺寸与环境</h2>
+<ul>
+<li>屏幕/纸面物理尺寸过小；</li>
+<li>反光、污损、折痕；</li>
+<li>光线太暗或曝光过度；</li>
+<li>扫描距离过近或过远。</li>
+</ul>
+<h2>设备差异</h2>
+<p>微信、系统相机、支付宝等对二维码实现略有不同。上线前至少测试两类应用。Android 低端机对复杂样式更敏感，重要场景请保守设计。</p>
+<h2>建议的排查顺序</h2>
+<ol>
+<li>在 FlyQRCode 预览中确认内容；</li>
+<li>换纯色高对比样式；</li>
+<li>增大尺寸与边距；</li>
+<li>去掉 Logo 再试；</li>
+<li>换手机、换光线重试；</li>
+<li>仍失败则更换更短的内容或联系<a href="../contact.html">我们</a>反馈。</li>
+</ol>
+                <hr>
+                <p><a href="./index.html">使用指南</a> · <a href="/zh-tw/index.html">返回 QR Code 產生器</a></p>
+            </div>
+        </article>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="Footer">
+        <a href="/zh-tw/index.html">首頁</a>
+        <a href="/zh-tw/guides/index.html">使用指南</a>
+        <a href="/zh-tw/about.html">關於我們</a>
+        <a href="/zh-tw/contact.html">聯絡我們</a>
+        <a href="/zh-tw/privacy.html">隱私權政策</a>
+        <a href="/zh-tw/terms.html">使用條款</a>
+    </nav>
+    <p class="footer-note">QR Code 內容僅在您的瀏覽器本地處理；歷史記錄保存在本機，不會上傳。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> © FlyQRCode. 保留所有權利。</p>
+</footer>
+<script>(function(){var y=document.getElementById("footer-year");if(y)y.textContent=String(new Date().getFullYear());})();</script>
+
+    </div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookie 與廣告說明</p>
+        <p class="cookie-text">我們使用 Cookie 以保障網站基本功能，並在您同意後展示 Google 等第三方個人化廣告。 <a href="./privacy.html">隱私權政策</a>. <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google</a></p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">接受</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">僅必要 Cookie</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../../js/site-config.js"></script>
+    <script src="../../js/lang-switch.js"></script>
+    <script src="../../js/cookie-consent.js"></script>
+</body>
+</html>

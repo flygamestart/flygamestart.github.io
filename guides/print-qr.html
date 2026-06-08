@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/locale-redirect.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="海报、传单、名片上的二维码尺寸、静区边距、文件格式与颜色模式建议。">
+    <meta name="robots" content="index, follow">
+    <title>印刷用二维码：尺寸、边距、PNG 与 SVG 怎么选？ - FlyQRCode</title>
+    <link rel="alternate" hreflang="zh-CN" href="https://flygamestart.github.io/guides/print-qr.html">
+    <link rel="alternate" hreflang="en" href="https://flygamestart.github.io/en/guides/print-qr.html">
+    <link rel="alternate" hreflang="zh-TW" href="https://flygamestart.github.io/zh-tw/guides/print-qr.html">
+    <link rel="alternate" hreflang="ja" href="https://flygamestart.github.io/ja/guides/print-qr.html">
+    <link rel="alternate" hreflang="ko" href="https://flygamestart.github.io/ko/guides/print-qr.html">
+    <link rel="alternate" hreflang="x-default" href="https://flygamestart.github.io/en/guides/print-qr.html">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="canonical" href="https://flygamestart.github.io/guides/print-qr.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlyQRCode">
+    <meta property="og:title" content="印刷用二维码：尺寸、边距、PNG 与 SVG 怎么选？ - FlyQRCode">
+    <meta property="og:description" content="海报、传单、名片上的二维码尺寸、静区边距、文件格式与颜色模式建议。">
+    <meta property="og:url" content="https://flygamestart.github.io/guides/print-qr.html">
+    <meta property="og:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="印刷用二维码：尺寸、边距、PNG 与 SVG 怎么选？ - FlyQRCode">
+    <meta name="twitter:description" content="海报、传单、名片上的二维码尺寸、静区边距、文件格式与颜色模式建议。">
+    <meta name="twitter:image" content="https://flygamestart.github.io/assets/og-cover.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "印刷用二维码：尺寸、边距、PNG 与 SVG 怎么选？ - FlyQRCode",
+      "description": "海报、传单、名片上的二维码尺寸、静区边距、文件格式与颜色模式建议。",
+      "url": "https://flygamestart.github.io/guides/print-qr.html",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "FlyQRCode",
+        "url": "https://flygamestart.github.io/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="page">
+        <header class="banner banner-compact">
+            <span class="banner-tag">FlyQRCode</span>
+            <h1>印刷用二维码：尺寸、边距、PNG 与 SVG 怎么选？</h1>
+            <p>从屏幕到纸面，保证扫得清、放得稳</p>
+            <nav class="site-nav" aria-label="主导航">
+    <a href="/index.html">首页</a>
+    <a href="/guides/index.html">使用指南</a>
+    <a href="/about.html">关于我们</a>
+    <a href="/contact.html">联系我们</a>
+    <a href="/privacy.html">隐私政策</a>
+    <a href="/terms.html">使用条款</a>
+    <span data-lang-switch class="lang-switch"></span>
+</nav>
+
+        </header>
+        <article class="panel legal-page">
+            <div class="panel-body prose">
+                <h2>印刷与屏幕的区别</h2>
+<p>屏幕上 200 像素的二维码可能清晰可见，但印刷到 A4 海报后若物理尺寸过小，摄像头难以对焦。印刷场景需要同时考虑<strong>物理边长</strong>、<strong>静区（空白边距）</strong>与<strong>文件格式</strong>。</p>
+<h2>推荐物理尺寸</h2>
+<ul>
+<li><strong>海报 / 易拉宝</strong>：二维码边长建议不小于 3cm，观看距离远时可加大到 5cm 以上；</li>
+<li><strong>传单 / 桌牌</strong>：2.5～4cm 较常见；</li>
+<li><strong>名片</strong>：至少 1.5～2cm，并避免与文字过近；</li>
+<li><strong>包装</strong>：根据扫描距离酌增，曲面包装需更大尺寸。</li>
+</ul>
+<h2>边距（静区）</h2>
+<p>QR 标准规定四周需保留空白模块，否则部分扫描器识别率下降。FlyQRCode 边距默认 12，印刷建议<strong>不要低于 8</strong>，重要物料可设为 16～24。不要用装饰边框紧贴码点。</p>
+<h2>PNG 还是 SVG？</h2>
+<table>
+<thead><tr><th>格式</th><th>适用</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>PNG</td><td>Office、微信、简单喷绘</td><td>导出时请将尺寸设为 800～1200px 再缩小使用，避免放大模糊</td></tr>
+<tr><td>SVG</td><td>广告店、Illustrator、印刷厂</td><td>矢量无损放大，是专业印刷首选</td></tr>
+</tbody>
+</table>
+<h2>颜色建议</h2>
+<p>印刷优先「极简黑白」：纯黑码点 + 白底。彩色品牌码需确认印刷机色差，并在打样后实扫。避免使用接近背景色的浅色码点。</p>
+<h2>出稿前检查清单</h2>
+<ol>
+<li>内容 URL 可访问且为 https；</li>
+<li>实机扫码 3 次以上成功；</li>
+<li>静区足够、Logo 不过大；</li>
+<li>向印刷方提供 SVG 或 ≥300dpi 等效 PNG。</li>
+</ol>
+                <hr>
+                <p><a href="./index.html">使用指南</a> · <a href="/index.html">返回二维码生成器</a></p>
+            </div>
+        </article>
+        <footer class="site-footer">
+    <nav class="footer-nav" aria-label="页脚导航">
+        <a href="/index.html">首页</a>
+        <a href="/guides/index.html">使用指南</a>
+        <a href="/about.html">关于我们</a>
+        <a href="/contact.html">联系我们</a>
+        <a href="/privacy.html">隐私政策</a>
+        <a href="/terms.html">使用条款</a>
+    </nav>
+    <p class="footer-note">二维码内容仅在您的浏览器本地处理；历史记录保存在本机，不会上传至服务器。</p>
+    <p class="footer-copy">© <span id="footer-year"></span> FlyQRCode. 保留所有权利。</p>
+</footer>
+<script>
+    (function () {
+        var yearEl = document.getElementById("footer-year");
+        if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+</script>
+
+    </div>
+    <div id="cookie-consent" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+    <div class="cookie-banner-inner">
+        <p id="cookie-title" class="cookie-title">Cookie 与广告说明</p>
+        <p class="cookie-text">
+            我们使用 Cookie 以保障网站基本功能，并在您同意后展示由 Google 等第三方提供的个性化广告。
+            详情请参阅<a href="./privacy.html">隐私政策</a>。您可随时在
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google 广告设置</a>
+            中管理偏好。
+        </p>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">接受</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cookie-reject">仅必要 Cookie</button>
+        </div>
+    </div>
+</div>
+
+    <script src="../js/site-config.js"></script>
+    <script src="../js/lang-switch.js"></script>
+    <script src="../js/cookie-consent.js"></script>
+</body>
+</html>
